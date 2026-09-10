@@ -284,6 +284,8 @@ nav button.on{color:var(--accent)}
       <div class="section-head"><h2>תחבורה</h2></div>
       <div class="tgrid" id="transport"></div>
     </div>
+
+    <div class="empty" id="buildStamp" style="font-size:11px;padding:18px 0 0"></div>
   </section>
 
   <!-- RESULTS -->
@@ -512,6 +514,7 @@ renderTransport();
 
 // ===== DISTANCE =====
 function km(a,b,c,d){ const R=6371,dl=(c-a)*Math.PI/180,dn=(d-b)*Math.PI/180,x=Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(x)); }
+const BUILD='10.09 19:32';
 const TRIP_CENTER={lat:44.4325,lng:26.1039}; // מרכז בוקרשט
 // כמה רחוקים מיעד הטיול. לפני הטיסה זה ~1,800 ק"מ, ואז כל מדדי המרחק חסרי משמעות.
 function awayFromTrip(){ const l=state.loc; if(!l||l.lat==null)return null; return km(l.lat,l.lng,TRIP_CENTER.lat,TRIP_CENTER.lng); }
@@ -1012,6 +1015,7 @@ function renderRadarPop(it){
   pop.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
+const bs=$('#buildStamp'); if(bs)bs.textContent='גרסה '+BUILD+(state.live&&state.live.updated?' · מקומות עודכנו '+state.live.updated:'');
 window.__tm=state;
 })();
 </script>
