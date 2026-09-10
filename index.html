@@ -182,6 +182,7 @@ nav button.on{color:var(--accent)}
 .radar-box.nogps .radar-empty-gps{height:auto}
 .radar-or{font-size:13px;color:var(--muted);margin-top:6px;max-width:320px}
 .radar-note{font-size:12.5px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.linkbtn{color:var(--accent);text-decoration:underline;font-size:12.5px;padding:0}
 .radar-pop{width:100%}
 .radar-legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--ink2)}
 .radar-legend span{display:inline-flex;align-items:center;gap:5px}
@@ -475,6 +476,7 @@ renderAreas();
 function setCity(c){ if(!c)return; const m=c.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(m){ setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); $('#cityInput').value=''; return; } state.loc={city:c,country:'',lat:null,lng:null,area:''}; LS.set('loc',state.loc); renderLoc(); renderAreas(); toast('המיקום נקבע'); $('#cityInput').value=''; }
 function gpsFail(err){ const code=err&&err.code; const msg=code===1?'הדפדפן חסם גישה למיקום (בתוך אפליקציית Claude זה קורה לפעמים). פתח את הקישור בדפדפן הטלפון (Safari/Chrome) ואשר מיקום — או בחר אזור מהכפתורים למטה.':code===3?'המיקום לא הגיע בזמן — נסה שוב בחוץ, או בחר אזור.':'לא הצלחתי לקבל מיקום — בחר אזור מהכפתורים, או הדבק קואורדינטות מ-Google Maps.'; toast(msg); $('#locSub').textContent=msg; $('#areaChips').scrollIntoView({behavior:'smooth',block:'center'}); }
 $('#gpsBtn').onclick=()=>{
+  state.locManual=false;
   if(!navigator.geolocation){gpsFail({code:0});return}
   $('#gpsBtn').disabled=true;$('#gpsBtn').textContent='מאתר…';
   navigator.geolocation.getCurrentPosition(async p=>{
@@ -510,8 +512,15 @@ renderTransport();
 
 // ===== DISTANCE =====
 function km(a,b,c,d){ const R=6371,dl=(c-a)*Math.PI/180,dn=(d-b)*Math.PI/180,x=Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(x)); }
+const TRIP_CENTER={lat:44.4325,lng:26.1039}; // מרכז בוקרשט
+// כמה רחוקים מיעד הטיול. לפני הטיסה זה ~1,800 ק"מ, ואז כל מדדי המרחק חסרי משמעות.
+function awayFromTrip(){ const l=state.loc; if(!l||l.lat==null)return null; return km(l.lat,l.lng,TRIP_CENTER.lat,TRIP_CENTER.lng); }
+function farFromTrip(){ const a=awayFromTrip(); return a!=null&&a>100; }
 function distTo(it){ const l=state.loc; if(!l||l.lat==null||it.lat==null||it.lng==null)return null; return km(l.lat,l.lng,it.lat,it.lng); }
-function distLabel(it){ const d=distTo(it); if(d==null)return ''; if(d<0.15)return 'כאן ממש'; if(d<2.5)return Math.max(2,Math.round(d/0.075))+' דק׳ הליכה'; if(d<30)return Math.round(d*10)/10+' ק״מ · ~'+Math.max(5,Math.round(d/0.4))+' דק׳ נסיעה'; return Math.round(d)+' ק״מ'; }
+function distLabel(it){
+  // כשעדיין בישראל, "1,800 ק״מ" על כל כרטיס זה רעש ולא מידע — עדיף לא להציג מרחק בכלל.
+  if(farFromTrip())return '';
+  const d=distTo(it); if(d==null)return ''; if(d<0.15)return 'כאן ממש'; if(d<2.5)return Math.max(2,Math.round(d/0.075))+' דק׳ הליכה'; if(d<30)return Math.round(d*10)/10+' ק״מ · ~'+Math.max(5,Math.round(d/0.4))+' דק׳ נסיעה'; return Math.round(d)+' ק״מ'; }
 function withDist(items){ return items.map(it=>Object.assign({},it,{_d:distTo(it)})).sort((a,b)=>(a._d==null?1e9:a._d)-(b._d==null?1e9:b._d)); }
 let dbNs=null, dbReady=(async()=>{ dbNs=FAM?null:await use('db'); return dbNs; })();
 
@@ -819,10 +828,13 @@ function renderTrip(){
 state.radarRange=LS.get('radarRange',2); // km — visible edge of the radar
 state.radarCat='all';
 state.radarSel=null;
+state.locManual=false; // המשתמש בחר שכונה ידנית במקום GPS (לא נשמר בין טעינות בכוונה)
 let radarWatchId=null;
 function startRadarWatch(){
   if(radarWatchId!=null||!navigator.geolocation)return;
   radarWatchId=navigator.geolocation.watchPosition(p=>{
+    // אם המשתמש בחר שכונה ידנית (למשל כדי לעיין בבוקרשט לפני הטיסה) — לא לדרוס לו אותה
+    if(state.locManual)return;
     state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude});
     LS.set('loc',state.loc); renderLoc();
     if(!$('#view-radar').classList.contains('hidden'))drawRadar();
@@ -879,7 +891,25 @@ function radarRingSteps(){ const r=state.radarRange; return [r/4,r/2,r]; }
 // הטבעות מצוירות באותה טרנספורמציה, כך שהתוויות עליהן נשארות נכונות.
 function radarRadius(km,R){ const f=Math.min(Math.max(km,0)/state.radarRange,1); return R*Math.sqrt(f); }
 function fmtKm(k){ return k<1?Math.round(k*1000)+' מ׳':(Math.round(k*10)/10)+' ק״מ'; }
-function navUrl(it){ const l=state.loc; if(l&&l.lat!=null&&it.lat!=null)return `https://www.google.com/maps/dir/?api=1&origin=${l.lat},${l.lng}&destination=${it.lat},${it.lng}&travelmode=walking`; return mapsUrl(it.maps_query||it.name_en||it.name); }
+function navUrl(it){ const l=state.loc; if(l&&l.lat!=null&&it.lat!=null&&!farFromTrip())return `https://www.google.com/maps/dir/?api=1&origin=${l.lat},${l.lng}&destination=${it.lat},${it.lng}&travelmode=walking`; return mapsUrl(it.maps_query||it.name_en||it.name); }
+// מסך בחירת מיקום — משמש גם כשאין GPS וגם כשעדיין רחוקים מבוקרשט
+function radarPicker(box,o){
+  box.classList.add('nogps');
+  box.innerHTML='<div class="radar-empty-gps">'
+    +`<div style="font-size:34px">${o.icon}</div>`
+    +`<div>${esc(o.title)}</div>`
+    +(o.gps?'<button class="pill accent" id="radarGps">שתף מיקום (GPS)</button>':'')
+    +`<div class="radar-or">${esc(o.sub)}</div>`
+    +'<div class="chips" id="radarAreas"></div>'
+    +'<div class="row" style="width:100%;max-width:320px"><input type="text" id="radarCoords" placeholder="או הדביקו קואורדינטות" autocomplete="off"><button class="pill" id="radarCoordsGo">קבע</button></div>'
+    +'</div>';
+  const g=$('#radarGps',box); if(g)g.onclick=()=>{ state.locManual=false; $('#gpsBtn').click(); };
+  $('#radarAreas',box).innerHTML=AREAS.map(([n])=>`<button class="pill" data-a="${esc(n)}">${esc(n)}</button>`).join('');
+  $$('#radarAreas .pill',box).forEach(b=>b.onclick=()=>{ const a=AREAS.find(x=>x[0]===b.dataset.a); state.locManual=true; setArea(a[0],a[1],a[2]); drawRadar(); });
+  const go=()=>{ const v=$('#radarCoords',box).value.trim(); const m=v.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(!m){toast('הדביקו קואורדינטות בפורמט 44.43, 26.10');return} state.locManual=true; setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); drawRadar(); };
+  $('#radarCoordsGo',box).onclick=go;
+  $('#radarCoords',box).addEventListener('keydown',e=>{ if(e.key==='Enter')go() });
+}
 function renderRadar(){
   const box=$('#radarBody'); box.innerHTML='';
   const wrap=document.createElement('div'); wrap.className='radar-wrap';
@@ -908,21 +938,16 @@ function drawRadar(){
     // No location yet. GPS is blocked outright in some contexts (inside the Claude app, and in
     // privacy-hardened browsers) — there the browser denies without ever showing a prompt — so the
     // manual options are offered right here instead of leaving a button that silently does nothing.
-    box.classList.add('nogps');
-    box.innerHTML='<div class="radar-empty-gps">'
-      +'<div style="font-size:34px">📡</div>'
-      +'<div>הרדאר צריך לדעת איפה אתם.</div>'
-      +'<button class="pill accent" id="radarGps">שתף מיקום (GPS)</button>'
-      +'<div class="radar-or">אם הדפדפן חוסם מיקום ולא קופצת בקשת אישור — בחרו איפה אתם:</div>'
-      +'<div class="chips" id="radarAreas"></div>'
-      +'<div class="row" style="width:100%;max-width:320px"><input type="text" id="radarCoords" placeholder="או הדביקו קואורדינטות" autocomplete="off"><button class="pill" id="radarCoordsGo">קבע</button></div>'
-      +'</div>';
-    $('#radarGps',box).onclick=()=>$('#gpsBtn').click();
-    $('#radarAreas',box).innerHTML=AREAS.map(([n])=>`<button class="pill" data-a="${esc(n)}">${esc(n)}</button>`).join('');
-    $$('#radarAreas .pill',box).forEach(b=>b.onclick=()=>{ const a=AREAS.find(x=>x[0]===b.dataset.a); setArea(a[0],a[1],a[2]); drawRadar(); });
-    const go=()=>{ const v=$('#radarCoords',box).value.trim(); const m=v.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(!m){toast('הדביקו קואורדינטות בפורמט 44.43, 26.10');return} setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); drawRadar(); };
-    $('#radarCoordsGo',box).onclick=go;
-    $('#radarCoords',box).addEventListener('keydown',e=>{ if(e.key==='Enter')go() });
+    radarPicker(box,{icon:'📡',title:'הרדאר צריך לדעת איפה אתם.',
+      sub:'אם הדפדפן חוסם מיקום ולא קופצת בקשת אישור — בחרו איפה אתם:',gps:true});
+    return;
+  }
+  // מרחק מבוקרשט: לפני הטיסה המשפחה נמצאת בישראל, וכל 89 המקומות מחוץ לטווח. בלי הבדיקה הזו
+  // הרדאר היה מציג מסך ריק עם ההודעה "אין מקומות בקטגוריה", שהיא פשוט לא נכונה.
+  const awayKm=km(state.loc.lat,state.loc.lng,TRIP_CENTER.lat,TRIP_CENTER.lng);
+  if(awayKm>100&&!state.locManual){
+    radarPicker(box,{icon:'✈️',title:`אתם כ-${Math.round(awayKm).toLocaleString('he-IL')} ק״מ מבוקרשט.`,
+      sub:'הרדאר יעבוד לבד ברגע שתנחתו. בינתיים — בחרו שכונה בבוקרשט כדי לראות מה יש סביבה:',gps:false});
     return;
   }
   box.classList.remove('nogps');
@@ -939,7 +964,11 @@ function drawRadar(){
     const parts=[`${items.length} מקומות בטווח ${state.radarRange} ק״מ`];
     if(capped)parts.push(`${capped} נוספים בטווח לא מוצגים (צפוף מדי)`);
     if(beyond)parts.push(`${beyond} רחוקים יותר — הגדילו טווח`);
-    note.textContent=parts.join(' · ');
+    note.innerHTML=esc(parts.join(' · '));
+    if(state.locManual){
+      note.innerHTML+=` · <b>${esc((state.loc&&state.loc.area)||'מיקום ידני')}</b> <button class="linkbtn" id="radarBackGps">חזרה למיקום שלי</button>`;
+      const b=$('#radarBackGps'); if(b)b.onclick=()=>{ state.locManual=false; state.loc=Object.assign({},state.loc,{lat:null,lng:null,area:''}); LS.set('loc',state.loc); renderLoc(); renderAreas(); drawRadar(); startRadarWatch(); };
+    }
   }
   const V=300,C=150,R=126;
   let svg=`<svg viewBox="0 0 ${V} ${V}" role="img" aria-label="רדאר מקומות סביב המיקום שלכם">`;
