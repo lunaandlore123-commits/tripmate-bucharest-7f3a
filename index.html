@@ -1,0 +1,988 @@
+<meta name="robots" content="noindex, nofollow, noarchive">
+<title>TripMate משפחה</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Heebo:wght@300;400;500;700&display=swap">
+<style>
+:root{
+  --bg:#F2F4F0; --surface:#FFFFFF; --surface2:#E9EDE6; --ink:#15292E; --ink2:#4E6166; --muted:#8B9A9E;
+  --line:#D6DDD8; --accent:#E2612A; --accent-ink:#FFFFFF; --trend:#D9A21B; --classic:#3C7A5B; --danger:#B3402E;
+  --shadow:0 1px 2px rgba(21,41,46,.06),0 6px 20px rgba(21,41,46,.06);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F191C; --surface:#172428; --surface2:#1F3036; --ink:#EEF3F1; --ink2:#B6C4C6; --muted:#7E9196;
+    --line:#2A3C42; --accent:#F0733D; --accent-ink:#14191A; --trend:#E6B53A; --classic:#5FB287; --danger:#E06A55;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F191C; --surface:#172428; --surface2:#1F3036; --ink:#EEF3F1; --ink2:#B6C4C6; --muted:#7E9196;
+  --line:#2A3C42; --accent:#F0733D; --accent-ink:#14191A; --trend:#E6B53A; --classic:#5FB287; --danger:#E06A55;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:"Heebo",system-ui,-apple-system,"Segoe UI",Arial,sans-serif;font-size:16px;line-height:1.5;margin:0;-webkit-font-smoothing:antialiased}
+#app{direction:rtl;max-width:560px;margin:0 auto;padding:0 16px 96px;min-height:100vh}
+h1,h2,h3{font-family:"Secular One","Heebo",sans-serif;font-weight:400;letter-spacing:0;text-wrap:balance;margin:0}
+h1{font-size:28px;line-height:1.15}
+h2{font-size:20px;line-height:1.2}
+h3{font-size:17px;line-height:1.25}
+button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
+button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+.eyebrow{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+
+/* header */
+header{display:flex;align-items:flex-end;justify-content:space-between;padding:20px 0 12px}
+.brand{display:flex;flex-direction:column;gap:2px}
+.brand small{color:var(--ink2);font-size:13px}
+.iconbtn{width:40px;height:40px;border-radius:12px;background:var(--surface);box-shadow:var(--shadow);display:grid;place-items:center;font-size:18px}
+
+/* location card */
+.loc{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:10px}
+.loc-row{display:flex;align-items:center;gap:10px}
+.loc-name{font-weight:700;font-size:18px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.loc-sub{color:var(--muted);font-size:13px}
+.pill{border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;background:var(--surface);display:inline-flex;align-items:center;gap:6px;transition:background .15s,border-color .15s}
+.pill.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pill.accent{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.pill:disabled{opacity:.5;cursor:default}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.row{display:flex;gap:8px;align-items:center}
+input[type=text]{flex:1;border:1px solid var(--line);border-radius:12px;padding:10px 12px;font:inherit;background:var(--surface);color:var(--ink);min-width:0}
+input::placeholder{color:var(--muted)}
+
+/* context */
+.ctx{margin-top:14px;display:flex;flex-direction:column;gap:8px}
+.ctx .chips{gap:6px}
+.ctx .pill{font-size:13px;padding:5px 11px}
+
+/* actions */
+.hero-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+.bigbtn{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:14px;text-align:right;display:flex;flex-direction:column;gap:4px;transition:transform .12s}
+.bigbtn:active{transform:scale(.98)}
+.bigbtn .t{font-weight:700;font-size:16px}
+.bigbtn .s{color:var(--ink2);font-size:13px}
+.bigbtn.primary{background:var(--accent);color:var(--accent-ink)}
+.bigbtn.primary .s{color:var(--accent-ink);opacity:.85}
+
+/* categories */
+.section{margin-top:22px;display:flex;flex-direction:column;gap:10px}
+.section-head{display:flex;align-items:baseline;justify-content:space-between}
+.catgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.cat{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:14px 10px;display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;transition:transform .12s;border:1px solid transparent}
+.cat:active{transform:scale(.97)}
+.cat.on{border-color:var(--accent)}
+.cat .ic{font-size:26px;line-height:1}
+.cat .n{font-weight:500;font-size:14px}
+.sub{background:var(--surface2);border-radius:14px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.sub .lbl{font-size:13px;color:var(--ink2)}
+
+/* results */
+.results{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.card-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.card h3{flex:1}
+.card .en{color:var(--muted);font-size:13px;direction:ltr;text-align:right;font-weight:400}
+.tag{font-size:11.5px;letter-spacing:.04em;font-weight:700;border-radius:6px;padding:3px 8px;white-space:nowrap;text-transform:uppercase}
+.tag.trend{background:color-mix(in srgb,var(--trend) 18%,transparent);color:var(--trend)}
+.tag.classic{background:color-mix(in srgb,var(--classic) 18%,transparent);color:var(--classic)}
+.tag.both{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+.meta{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--ink2);font-variant-numeric:tabular-nums}
+.meta b{color:var(--ink)}
+.why{font-size:15px}
+.kids{font-size:14px;color:var(--ink2);background:var(--surface2);border-radius:10px;padding:8px 10px}
+.ages{display:inline-flex;gap:4px;align-items:center}
+.ages span{width:24px;height:22px;border-radius:7px;display:grid;place-items:center;font-size:12px;font-weight:700;font-variant-numeric:tabular-nums;background:color-mix(in srgb,var(--classic) 20%,transparent);color:var(--classic)}
+.ages span.no{background:var(--surface2);color:var(--muted);text-decoration:line-through;font-weight:400}
+.ages .lbl{font-size:11px;color:var(--muted);margin-inline-start:2px}
+.kids b{color:var(--ink)}
+.card-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:2px}
+.card-actions a,.card-actions button{border:1px solid var(--line);border-radius:10px;padding:7px 12px;font-size:14px;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;gap:6px;background:var(--surface)}
+.card-actions .fav.on{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.summary{background:var(--surface2);border-radius:14px;padding:12px 14px;font-size:15px;color:var(--ink);border-right:3px solid var(--accent)}
+.card.live{border:1px solid color-mix(in srgb,var(--trend) 45%,transparent)}
+.src{display:inline-flex;align-items:center;gap:6px;border-radius:10px;padding:7px 12px;font-size:14px;text-decoration:none;font-weight:500}
+.src.tiktok{background:#111;color:#fff;border:1px solid #111}
+.src.instagram{background:linear-gradient(45deg,#f09433,#dc2743 60%,#bc1888);color:#fff;border:0}
+.src.youtube{background:#e0231b;color:#fff;border:0}
+.src.web{background:var(--surface2);color:var(--ink);border:1px solid var(--line)}
+.live-head{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.live-head .stamp{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.hscroll{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 8px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.hscroll .mini{flex:0 0 78%;scroll-snap-align:start;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);padding:12px 14px;display:flex;flex-direction:column;gap:6px;border-top:3px solid var(--trend)}
+.hscroll .mini h3{font-size:16px}
+.hscroll .mini .why{font-size:14px;color:var(--ink2);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.hscroll .mini .card-actions{margin-top:auto}
+
+/* day plan */
+.stop{display:grid;grid-template-columns:56px 1fr;gap:12px;position:relative}
+.stop .time{font-family:"Secular One",sans-serif;font-size:15px;color:var(--accent);padding-top:14px;font-variant-numeric:tabular-nums}
+.stop+.stop{margin-top:10px}
+
+/* trip */
+.days{display:flex;gap:6px;overflow-x:auto;padding:2px 0 8px;-webkit-overflow-scrolling:touch}
+.days button{flex:0 0 auto;border:1px solid var(--line);border-radius:12px;padding:6px 10px;background:var(--surface);display:flex;flex-direction:column;align-items:center;min-width:56px;font-variant-numeric:tabular-nums}
+.days button .d{font-family:"Secular One",sans-serif;font-size:17px;line-height:1.1}
+.days button .w{font-size:11px;color:var(--muted)}
+.days button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.days button.on .w{color:var(--bg);opacity:.8}
+.days button.today{border-color:var(--accent);box-shadow:inset 0 0 0 1px var(--accent)}
+.day-title{display:flex;flex-direction:column;gap:4px;margin:6px 0 10px}
+.day-title .theme{color:var(--ink2);font-size:14px}
+.dist{color:var(--accent);font-weight:500}
+.stop .card{position:relative}
+.stop .del{position:absolute;top:8px;left:8px;width:26px;height:26px;border-radius:8px;color:var(--muted);font-size:16px;display:grid;place-items:center}
+.stop .del:hover{background:var(--surface2);color:var(--danger)}
+.hero-actions .bigbtn .t{font-size:15px}
+
+/* transport */
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tgrid a{background:var(--surface);border-radius:14px;box-shadow:var(--shadow);padding:14px;text-decoration:none;color:var(--ink);display:flex;flex-direction:column;gap:2px}
+.tgrid a .t{font-weight:700}
+.tgrid a .s{font-size:13px;color:var(--ink2)}
+
+/* states */
+.loading{display:flex;flex-direction:column;gap:12px;align-items:center;padding:28px 0;color:var(--ink2)}
+.spin{width:28px;height:28px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:sp .9s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.notice{background:var(--surface2);border-radius:12px;padding:12px 14px;font-size:14px;color:var(--ink2)}
+.notice.err{color:var(--danger);border:1px solid color-mix(in srgb,var(--danger) 35%,transparent)}
+.empty{color:var(--muted);text-align:center;padding:24px 0}
+
+/* nav */
+nav{position:fixed;bottom:0;left:0;right:0;background:var(--surface);border-top:1px solid var(--line);display:flex;justify-content:center;z-index:5;padding-bottom:env(safe-area-inset-bottom)}
+nav .inner{display:flex;width:100%;max-width:560px;direction:rtl}
+nav button{flex:1;padding:10px 4px 8px;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:12px;color:var(--muted)}
+nav button .ic{font-size:20px}
+nav button.on{color:var(--accent)}
+.back{display:inline-flex;align-items:center;gap:6px;color:var(--ink2);font-size:14px;padding:6px 0}
+
+/* radar */
+.radar-wrap{display:flex;flex-direction:column;align-items:center;gap:14px;margin-top:4px}
+.radar-controls{display:flex;flex-direction:column;gap:8px;align-items:center;width:100%}
+.radar-controls .chips{justify-content:center}
+.radar-box{position:relative;width:100%;max-width:340px;aspect-ratio:1;touch-action:manipulation}
+.radar-box svg{width:100%;height:100%;display:block;overflow:visible}
+.radar-ring{fill:none;stroke:var(--line)}
+.radar-ring-label{font-size:8.5px;fill:var(--muted);font-family:"Heebo",sans-serif}
+.radar-compass{font-size:11px;fill:var(--ink2);font-weight:700;font-family:"Heebo",sans-serif;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.radar-me{fill:var(--accent);pointer-events:none}
+.radar-me-pulse{fill:var(--accent);opacity:.35;transform-origin:center;transform-box:fill-box;animation:radarpulse 2.4s ease-out infinite;pointer-events:none}
+@keyframes radarpulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(9);opacity:0}}
+.radar-pin{cursor:pointer}
+.radar-pin circle{stroke:var(--surface);stroke-width:2;transition:r .1s}
+.radar-pin.trend circle{fill:var(--trend)}
+.radar-pin.classic circle{fill:var(--classic)}
+.radar-pin.both circle{fill:var(--accent)}
+.radar-pin.out circle{opacity:.55;stroke-dasharray:2 1.5}
+.radar-pin text{font-size:11px;pointer-events:none;font-family:"Heebo",sans-serif}
+.radar-pin.sel circle{stroke:var(--ink);stroke-width:3;r:12}
+.radar-empty-gps{display:flex;flex-direction:column;align-items:center;gap:10px;padding:24px 8px;text-align:center;color:var(--ink2);height:100%;justify-content:center}
+.radar-box.nogps{aspect-ratio:auto;max-width:100%}
+.radar-box.nogps .radar-empty-gps{height:auto}
+.radar-or{font-size:13px;color:var(--muted);margin-top:6px;max-width:320px}
+.radar-note{font-size:12.5px;color:var(--muted);text-align:center;font-variant-numeric:tabular-nums}
+.radar-pop{width:100%}
+.radar-legend{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;font-size:12px;color:var(--ink2)}
+.radar-legend span{display:inline-flex;align-items:center;gap:5px}
+.radar-legend i{width:10px;height:10px;border-radius:50%;display:inline-block;font-style:normal}
+.hidden{display:none!important}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app">
+  <header>
+    <div class="brand">
+      <h1>TripMate</h1>
+      <small id="tagline">מדריך הטיול של המשפחה</small>
+    </div>
+    <button class="iconbtn" id="settingsBtn" title="הגדרות" aria-label="הגדרות">⚙︎</button>
+  </header>
+
+  <!-- HOME -->
+  <section id="view-home">
+    <div class="loc">
+      <div class="loc-row">
+        <span style="font-size:22px">📍</span>
+        <div style="flex:1;min-width:0">
+          <div class="loc-name" id="locName">לא נבחר מיקום</div>
+          <div class="loc-sub" id="locSub">שתף מיקום או הקלד עיר</div>
+        </div>
+        <button class="pill accent" id="gpsBtn">שתף מיקום</button>
+      </div>
+      <div class="chips" id="areaChips"></div>
+      <div class="row">
+        <input type="text" id="cityInput" placeholder="עיר אחרת, או הדבק קואורדינטות מ-Google Maps (44.43, 26.10)" autocomplete="off">
+        <button class="pill" id="cityGo">קבע</button>
+      </div>
+    </div>
+
+    <div class="ctx">
+      <span class="eyebrow">מי ומתי</span>
+      <div class="chips" id="whoChips">
+        <button class="pill on" data-who="family">כל המשפחה (6–16)</button>
+        <button class="pill" data-who="teens">רק הגדולים</button>
+        <button class="pill" data-who="little">רק הקטנים</button>
+        <button class="pill" data-who="adults">הורים בלבד</button>
+      </div>
+      <div class="chips" id="timeChips">
+        <button class="pill" data-time="morning">בוקר</button>
+        <button class="pill" data-time="afternoon">צהריים</button>
+        <button class="pill" data-time="evening">ערב</button>
+        <button class="pill on" data-time="any">לא משנה</button>
+      </div>
+      <div class="chips" id="wxChips">
+        <button class="pill on" data-wx="clear">☀️ יבש</button>
+        <button class="pill" data-wx="rain">🌧️ גשום</button>
+        <button class="pill" data-wx="hot">🥵 חם מאוד</button>
+      </div>
+    </div>
+
+    <div class="hero-actions">
+      <button class="bigbtn primary" id="tripBtn"><span class="t">🧳 תוכנית הטיול</span><span class="s" id="tripSub">16–22.9 · מה עושים היום</span></button>
+      <button class="bigbtn" id="nearBtn"><span class="t">📍 קרוב אליי</span><span class="s">לפי מרחק הליכה</span></button>
+      <button class="bigbtn" id="hotBtn"><span class="t">🔥 מה חם עכשיו</span><span class="s">טרנדים + קלאסיקות</span></button>
+      <button class="bigbtn" id="planBtn"><span class="t">🗓️ תכנן לי יום</span><span class="s">מסלול AI לפי המשפחה</span></button>
+    </div>
+
+    <div class="section hidden" id="liveSection">
+      <div class="live-head"><h2>📲 מהרשת עכשיו</h2><span class="stamp" id="liveStamp"></span></div>
+      <div class="summary" id="liveSummary" style="font-size:14px"></div>
+      <div class="hscroll" id="liveScroll"></div>
+      <button class="pill" id="liveAll" style="align-self:flex-start">כל הטרנדים עם הסרטונים →</button>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>אוכל</h2></div>
+      <div class="catgrid" id="foodGrid"></div>
+      <div class="sub hidden" id="foodSub"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>אטרקציות</h2></div>
+      <div class="catgrid" id="funGrid"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>טבע ותצפיות</h2></div>
+      <div class="catgrid" id="natureGrid"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>קניות ולינה</h2></div>
+      <div class="catgrid" id="shopGrid"></div>
+      <div class="sub hidden" id="shopSub"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>ישראלים ויהדות</h2></div>
+      <div class="catgrid" id="jewGrid"></div>
+    </div>
+
+    <div class="section">
+      <div class="section-head"><h2>תחבורה</h2></div>
+      <div class="tgrid" id="transport"></div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section id="view-results" class="hidden">
+    <button class="back" id="backBtn">→ חזרה לתפריט</button>
+    <div class="section" style="margin-top:6px">
+      <div class="section-head"><h2 id="resTitle"></h2><button class="pill" id="refreshBtn">רענן</button></div>
+      <div class="notice" id="resCtx"></div>
+      <div id="refineBox" class="sub">
+        <div class="row"><input type="text" id="refineInput" placeholder="מה בדיוק? למשל: רוק, סטנד-אפ, הערב, בחוץ, זול…" autocomplete="off"><button class="pill accent" id="refineGo">חפש</button></div>
+        <div class="chips" id="refineChips"></div>
+      </div>
+      <div id="resBody"></div>
+    </div>
+  </section>
+
+  <!-- TRIP PLAN -->
+  <section id="view-trip" class="hidden">
+    <button class="back" id="tripBack">→ חזרה לתפריט</button>
+    <div class="section" style="margin-top:6px">
+      <div class="section-head"><h2>🧳 בוקרשט 16–22.9</h2><button class="pill" id="tripRegen">תכנן מחדש</button></div>
+      <div id="tripSetup" class="card">
+        <h3>לפני שמתכננים</h3>
+        <div class="row"><input type="text" id="hotelInput" placeholder="איפה המלון? (שכונה או שם המלון)"></div>
+        <div class="row"><input type="text" id="flightInput" placeholder="שעות טיסה: נחיתה 16.9 / המראה 22.9 (למשל: נוחתים 13:00, ממריאים 18:00)"></div>
+        <div class="chips">
+          <button class="pill" id="shabbatChip">🕯️ שומרים שבת (ו׳–ש׳ 18–19.9)</button>
+          <button class="pill" id="dayTripChip">🏰 כולל יום לטירת דרקולה/פלש</button>
+          <button class="pill on" id="thermeChip">🌊 כולל יום Therme</button>
+        </div>
+        <div class="card-actions"><button class="pill accent" id="tripGo">צור תוכנית ל-7 ימים</button></div>
+        <div class="notice" style="font-size:13px">התוכנית נבנית סביב הטרנדים והקלאסיקות מהרשת + ידע של Claude, נשמרת לכל המשפחה, ואפשר לערוך אותה ידנית אחר כך. לוקח כדקה.</div>
+      </div>
+      <div id="tripBody"></div>
+    </div>
+  </section>
+
+  <!-- RADAR -->
+  <section id="view-radar" class="hidden">
+    <div class="section" style="margin-top:6px">
+      <div class="section-head"><h2>📡 רדאר</h2></div>
+      <div id="radarBody"></div>
+    </div>
+  </section>
+
+  <!-- FAVORITES -->
+  <section id="view-favs" class="hidden">
+    <div class="section" style="margin-top:6px">
+      <div class="section-head"><h2>שמורים</h2><button class="pill" id="clearFavs">נקה</button></div>
+      <div class="results" id="favBody"></div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="view-settings" class="hidden">
+    <div class="section" style="margin-top:6px">
+      <h2>הגדרות</h2>
+      <div class="card">
+        <h3>המשפחה</h3>
+        <div class="row"><input type="text" id="famInput" placeholder="למשל: 2 הורים, ילדים בני 6, 9, 13, 16"></div>
+        <h3 style="margin-top:6px">העדפות</h3>
+        <div class="row"><input type="text" id="prefInput" placeholder="למשל: כשר בלבד / בלי בשר חזיר / אלרגיה לבוטנים / אוהבים מוזיאוני מדע"></div>
+        <h3 style="margin-top:6px">תקציב</h3>
+        <div class="chips" id="budgetChips">
+          <button class="pill" data-b="low">חסכוני</button>
+          <button class="pill on" data-b="mid">בינוני</button>
+          <button class="pill" data-b="high">מפנקים</button>
+        </div>
+        <div class="card-actions"><button id="saveSettings">שמור</button><button id="clearCache">נקה זיכרון המלצות</button></div>
+      </div>
+      <div class="notice">ההמלצות נוצרות על ידי Claude מתוך הידע שלו על מקומות מוכרים ומדורגים. תמיד בדקו שעות פתיחה ומחירים בלינק של Google Maps לפני שיוצאים.</div>
+    </div>
+  </section>
+</div>
+
+<nav><div class="inner">
+  <button class="on" data-view="home"><span class="ic">🧭</span>תפריט</button>
+  <button data-view="results" id="navResults"><span class="ic">✨</span>המלצות</button>
+  <button data-view="radar"><span class="ic">📡</span>רדאר</button>
+  <button data-view="favs"><span class="ic">♥</span>שמורים</button>
+</div></nav>
+
+<script>window.__EMBED={"live": {"city": "Bucharest", "city_he": "בוקרשט", "items": [{"ages": [9, 13, 16], "area": "Calea Victoriei 115", "cat": "cafe", "kids": "מתאים לארוחת בוקר/בראנץ' או קינוח אחר הצהריים; הטרסה גדולה ונוחה למשפחה. יקר יחסית.", "lat": 44.4415, "lng": 26.0955, "maps_query": "Grand Café de Bucarest, Calea Victoriei 115, Bucharest", "name": "גרנד קפה דה בוקרסט", "name_en": "Grand Café de Bucarest", "source": {"by": "@coffeenomadul", "platform": "TikTok", "url": "https://www.tiktok.com/@coffeenomadul/video/7638670364209466646"}, "source2": {"platform": "Instagram", "url": "https://www.instagram.com/reel/DYkNyZXtKm4/"}, "tag": "trend", "why": "נפתח לאחרונה בארמון היסטורי מ-1889 (Casa Monteoru) עם טרסה של 250 מקומות, מדרגות שיש ואווירה פריזאית. כרגע המקום הכי מצולם בעיר."}, {"ages": [6, 9, 13, 16], "area": "Balotești, 30 דק' צפונית לעיר", "cat": "water", "kids": "מושלם לכל הגילאים — אזור Galaxy למגלשות (מגיל 6-8 לפי גובה), Palm לבריכות רגועות. תכננו 5-6 שעות. יש אוטובוס חינם מ-Piața Presei.", "lat": 44.6105, "lng": 26.083, "maps_query": "Therme Bucuresti, Balotesti", "name": "תרמה בוקרשט", "name_en": "Therme București", "source": {"by": "@themepark_explorers", "platform": "TikTok", "url": "https://www.tiktok.com/@themepark_explorers/video/7264186010580356384"}, "source2": {"platform": "TikTok", "url": "https://www.tiktok.com/@tuberides.official/video/7364834220528766241"}, "tag": "both", "why": "פארק המים/ספא הגדול באירופה: 16 מגלשות (Andromeda, Quasar, Nix & Hydra), בריכת גלים, בריכות חמות ועצי דקל. הסרטון הכי צפוי מבוקרשט בטיקטוק."}, {"ages": [6, 9, 13, 16], "area": "Stavropoleos 5, העיר העתיקה", "cat": "rest", "kids": "תפריט ילדים, ההופעה מרתקת גם לקטנים. חובה להזמין מקום מראש — התור בערב ארוך. לכו ב-12:00 או 17:30.", "lat": 44.4318, "lng": 26.098, "maps_query": "Caru' cu Bere, Strada Stavropoleos 5, Bucharest", "name": "קארו קו בֶּרֶה", "name_en": "Caru' cu Bere", "source": {"by": "@carucubere", "platform": "Instagram", "url": "https://www.instagram.com/carucubere/"}, "sub": "מקומי", "tag": "classic", "why": "המסעדה הכי מפורסמת ברומניה, מ-1879. אולם ניאו-גותי מטורף, מוזיקה חיה, סרמלה, מיצ'י ופפנאש. דורג #8 מסעדות מסורתיות בעולם ב-TasteAtlas."}, {"ages": [13, 16], "area": "קומה 36, Sky Tower, Floreasca", "cat": "view", "kids": "מתאים לארוחת צהריים עם הילדים (פחות לערב מאוחר). הזמנה מראש חובה, בקשו שולחן ליד החלון.", "lat": 44.478, "lng": 26.1035, "maps_query": "NOR Sky Casual Restaurant, Sky Tower, Bucharest", "name": "NOR – המסעדה הכי גבוהה בעיר", "name_en": "NOR Sky Casual Restaurant", "source": {"by": "@nor.bucharest", "platform": "Instagram", "url": "https://www.instagram.com/nor.bucharest/reels/"}, "tag": "trend", "why": "המסעדה הכי גבוהה בבוקרשט, תצפית 360 על העיר. זכה ב-People's Choice 2025. הסרטונים מהשקיעה שם מסתובבים באינסטגרם."}, {"ages": [9, 13, 16], "area": "גג חנות Victoria, ליד העיר העתיקה", "cat": "view", "kids": "מדורג בטריפאדוויזור כ'ידידותי לילדים' במפורש. שקיעה ~19:30 בספטמבר — הגיעו 18:45.", "lat": 44.4325, "lng": 26.0985, "maps_query": "Linea Closer to the Moon, Bucharest", "name": "לינאה / קלוזר טו דה מון", "name_en": "Linea / Closer to the Moon", "source": {"by": "Best of TikTok/Instagram guide", "platform": "אתר", "url": "https://airial.travel/restaurants/romania/bucharest/linea-closer-to-the-moon-S8-1qHCH"}, "tag": "both", "why": "גג עם נוף פנורמי צעד מהעיר העתיקה. מסעדה מלאה (פסטה, בורגרים, קינוחים) — לא רק בר."}, {"ages": [6, 9, 13, 16], "area": "Lipscani 55, העיר העתיקה", "cat": "museum", "kids": "חינם, 20-30 דקות, מדף ילדים גדול, קפה למעלה. מושלם להפסקה מהחום.", "lat": 44.4322, "lng": 26.1, "maps_query": "Carturesti Carusel, Strada Lipscani 55, Bucharest", "name": "קרטורשטי קרוסל", "name_en": "Cărturești Carusel", "source": {"platform": "Instagram", "url": "https://www.instagram.com/reel/DV37KcEjLPf/"}, "source2": {"platform": "Instagram", "url": "https://www.instagram.com/reel/DOQXpPVDF_S/"}, "tag": "both", "why": "'חנות הספרים היפה בעולם' — 6 קומות לבנות עם מרפסות וקפה בקומה העליונה. אחד המקומות הכי מצולמים ברומניה."}, {"ages": [6, 9, 13, 16], "area": "AFI Cotroceni", "cat": "museum", "kids": "בול לגילאי 6-16, שעה-שעה וחצי. נמצא בתוך הקניון הגדול ביותר ברומניה — אפשר לשלב קניות + החלקה על קרח + IMAX.", "lat": 44.4308, "lng": 26.054, "maps_query": "Museum of Senses, AFI Cotroceni, Bucharest", "name": "מוזיאון החושים", "name_en": "Museum of Senses", "source": {"by": "@visitbucharest_official", "platform": "TikTok", "url": "https://www.tiktok.com/@visitbucharest_official/video/7548057844965182742"}, "source2": {"platform": "TikTok", "url": "https://www.tiktok.com/@coupla_dates/video/7469492858119114017"}, "tag": "trend", "why": "מוזיאון אשליות אינטראקטיבי — חדר הפוך, מנהרת מערבולת, אשליות אופטיות. הכי מצולם על ידי משפחות בטיקטוק."}, {"ages": [6, 9, 13, 16], "area": "בוקרשט", "cat": "rest", "kids": "בשרים על האש ולחם חם — עובד מצוין עם ילדים. פלטה ל-2-3 ~242 לאי. הזמינו 2 פלטות ל-6.", "maps_query": "Bosfhas restaurant Bucharest", "name": "בוספהאס – טורקי חדש", "name_en": "Bosfhas", "source": {"by": "@coffeenomadul", "platform": "TikTok", "url": "https://www.tiktok.com/@coffeenomadul/video/7483991064936860950"}, "sub": "שאוורמה", "tag": "trend", "why": "מסעדה טורקית שנפתחה לאחרונה ומסתובבת בטיקטוק: לאווש חם מהטאבון (הראשון חינם), פלטת בשרים ל-2-3, מזה, קטמר עם גלידה."}, {"ages": [9, 13, 16], "area": "Strada Gabroveni 61, העיר העתיקה", "cat": "rest", "kids": "מנות קטנות ומהירות — טוב לילדים בררנים. מקום קטן, לכו מוקדם.", "lat": 44.4315, "lng": 26.1015, "maps_query": "Mexikanos, Strada Gabroveni 61, Bucharest", "name": "מקסיקנוס – טאקוס בעיר העתיקה", "name_en": "Mexikanos", "source": {"by": "TikTok discover", "platform": "TikTok", "url": "https://www.tiktok.com/discover/restaurant-terasa-bucuresti"}, "sub": "מקסיקני", "tag": "trend", "why": "מקסיקני חדש בעיר העתיקה שטיקטוק גילה: בירייה טאקוס, צ'וריסו טאקוס, בוריטו."}, {"ages": [6, 9, 13, 16], "area": "Calea Victoriei 2", "cat": "breakfast", "kids": "פנקייקים ושקשוקה — קל עם ילדים. סוף שבוע עמוס, בואו לפני 11:00.", "lat": 44.4305, "lng": 26.0965, "maps_query": "LUMA Brunch & Lounge, Calea Victoriei 2, Bucharest", "name": "לומה בראנץ'", "name_en": "LUMA Brunch & Lounge", "source": {"by": "Best Brunch in Bucharest 2026", "platform": "Instagram", "url": "https://www.instagram.com/reel/DTgFkD0iDoV/"}, "tag": "trend", "why": "בראנץ' כל היום — שקשוקה, בנדיקט סלמון-אבוקדו. חלק מסדרת 'Best Brunch in Bucharest 2026' באינסטגרם."}, {"ages": [6, 9, 13, 16], "area": "Strada Smârdan 9, העיר העתיקה", "cat": "cafe", "kids": "הילדים אוהבים את הקירות. יקר יחסית לעיר (~£27 ל-2 מנות + שתייה). טוב לארוחת בוקר לפני סיבוב בעיר העתיקה.", "lat": 44.4315, "lng": 26.0995, "maps_query": "Grand Cafe Van Gogh, Strada Smardan 9, Bucharest", "name": "קפה ואן גוך", "name_en": "Grand Cafe Van Gogh", "source": {"by": "@travelswithd", "platform": "TikTok", "url": "https://www.tiktok.com/@travelswithd/video/7372234243780480288"}, "tag": "both", "why": "קפה בהשראת ואן גוך עם ציורים על כל הקירות — הבראנץ' הכי מצולם בעיר העתיקה. פנקייקים עם נוטלה ופירות."}, {"ages": [6, 9, 13, 16], "area": "בכל מסעדה רומנית", "cat": "dessert", "kids": "ילדים משתגעים על זה. מגיע 20 דקות אחרי ההזמנה — הזמינו עם המנה העיקרית. מנה אחת ל-2 ילדים.", "maps_query": "Stadio restaurant Bucharest", "name": "פפנאש – הקינוח הלאומי", "name_en": "Papanași", "source": {"by": "@balkandad", "platform": "TikTok", "url": "https://www.tiktok.com/@balkandad/video/7419725101068848404"}, "source2": {"platform": "TikTok", "url": "https://www.tiktok.com/@bucharestsfinest/video/7051600274191813893"}, "tag": "classic", "why": "סופגניית גבינה חמה עם שמנת חמוצה וריבת דובדבנים. הקינוח הכי מצולם ברומניה. הכי טוב ב-Caru' cu Bere, Stadio או Hanu' lui Manuc.", "lat": 44.4372, "lng": 26.09912}, {"ages": [6, 9, 13, 16], "area": "מספר סניפים, מרכז", "cat": "dessert", "kids": "עצירה חובה בין אטרקציות. טעמי פירות ליום חם.", "maps_query": "Holy Gelato Bucharest", "name": "הולי ג'לאטו", "name_en": "Holy Gelato", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurants-g294458-zfd9899-Bucharest-Ice_Cream.html"}, "tag": "both", "why": "הגלידה הכי מדורגת בבוקרשט בטריפאדוויזור. גלידה איטלקית איכותית."}, {"ages": [6, 9, 13], "area": "העיר העתיקה", "cat": "dessert", "kids": "בני 6-12 יתלהבו. שייק אחד מספיק ל-2. סוכר כבד — לא לפני חדר בריחה.", "maps_query": "Coffeol, Bucharest Old Town", "name": "קופיאול – פריקשייקים", "name_en": "Coffeol", "source": {"by": "The Sweet Wanderlust", "platform": "אתר", "url": "https://thesweetwanderlust.com/sweets-eats/best-dessert-in-bucharest/"}, "tag": "trend", "why": "פריקשייקים ענקיים — מילקשייק עם קאפקייק, וופל, עוגיות וסוכריות מעליו. הקינוח הכי אינסטגרמי בעיר העתיקה."}, {"ages": [6, 9], "area": "Tineretului Park, דרום העיר", "cat": "luna", "kids": "מושלם לבני 6-10; בני 13-16 ישתעממו אחרי שעה. שלבו עם פארק Tineretului ליד.", "lat": 44.4085, "lng": 26.108, "maps_query": "Oraselul Copiilor, Parcul Tineretului, Bucharest", "name": "עיר הילדים", "name_en": "Orășelul Copiilor", "source": {"by": "TikTok discover", "platform": "TikTok", "url": "https://www.tiktok.com/discover/oraselul-copiilor-bucurest-gheara"}, "tag": "classic", "why": "לונה פארק + עיר-מיני שבה ילדים משחקים במקצועות (כבאים, רופאים), מיני-גולף, פינת חי. חינם להיכנס, משלמים על מתקנים."}, {"ages": [9, 13, 16], "area": "Romexpo / Titan", "cat": "motor", "kids": "קארטים לילדים מגיל ~7 (לפי גובה), למבוגרים ולנוער בנפרד. בן 16 יוכל להתחרות באבא. הזמינו מראש.", "lat": 44.476, "lng": 26.065, "maps_query": "VMAX Karting Romexpo Bucharest", "name": "VMAX קארטינג", "name_en": "VMAX Karting Romexpo", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d21068112-Reviews-Vmax_Karting_Romexpo-Bucharest.html"}, "tag": "both", "why": "המסלול המקורה הגדול בעיר — מרוץ 'גרנד פרי' פרטי של 20 דקות לקבוצה. הכי מדורג לקארטינג בבוקרשט."}, {"ages": [9, 13, 16], "area": "Veranda Mall, מרכז-מזרח", "cat": "escape", "kids": "6 אנשים = צוות מושלם. בחרו חדר 'Family' לגילאי 6-16. יש גם חדר וילי וונקה שנמכר הכי הרבה למשפחות. בקשו הדרכה באנגלית.", "lat": 44.4515, "lng": 26.1275, "maps_query": "Escape room Veranda Mall Bucharest", "name": "חדרי בריחה – Veranda Mall", "name_en": "Escape Rooms Veranda Mall", "source": {"by": "GOKID", "platform": "אתר", "url": "https://gokid.ro/escape-rooms-bucharest-for-adventurous-children/"}, "tag": "trend", "why": "המותג הגדול של חדרי בריחה ברומניה פתח 6 חדרים חדשים במיקום מרכזי, עם תפאורות מרשימות ורמות קושי שונות מגיל 7."}, {"ages": [6, 9, 13, 16], "area": "צפון העיר", "cat": "citypark", "kids": "סירות פדלים על האגם = שעה של כיף לכולם. מוזיאון הכפר בקצה הפארק — שלבו.", "lat": 44.4735, "lng": 26.08, "maps_query": "Herastrau Park, Bucharest", "name": "פארק הרסטראו (רגלה אני)", "name_en": "Parcul Regele Mihai I (Herăstrău)", "source": {"by": "Bucharest Travel Guide 2026", "platform": "YouTube", "url": "https://www.youtube.com/watch?v=jMBixjsvxos"}, "tag": "classic", "why": "200 דונם עם אגם, השכרת סירות ואופניים, מגרשי משחקים ופארק חבלים. הפארק הכי גדול בעיר."}, {"ages": [6, 9, 13], "area": "בתוך פארק הרסטראו", "cat": "museum", "kids": "פתוח באוויר — הילדים רצים חופשי. חינם מתחת לגיל 7. שעה וחצי. לכו בבוקר לפני החום.", "lat": 44.4715, "lng": 26.0765, "maps_query": "Dimitrie Gusti National Village Museum, Bucharest", "name": "מוזיאון הכפר", "name_en": "Muzeul Satului (Dimitrie Gusti)", "source": {"by": "Kids Are A Trip 2026", "platform": "אתר", "url": "https://kidsareatrip.com/best-things-to-do-in-bucharest-with-kids/"}, "tag": "classic", "why": "מוזיאון פתוח עם 300+ בתי כפר אמיתיים מכל רומניה שהובאו ונבנו מחדש. הליכה בין בתי עץ, כנסיות ותחנות רוח."}, {"ages": [13, 16], "area": "דירה פרטית, מרכז", "cat": "museum", "kids": "בני 13-16 יתחברו (סיפור אמיתי, רדיו, בגדים). הקטנים פחות. ביקור מודרך, הזמנה מראש.", "maps_query": "Ferestroika museum Bucharest", "name": "פרסטרויקה – דירה קומוניסטית", "name_en": "Ferestroika", "source": {"by": "Travelynn Family 2026", "platform": "אתר", "url": "https://travelynnfamily.com/bucharest-with-kids/"}, "tag": "trend", "why": "מוזיאון קטן בדירה שקפאה בזמן משנות ה-70 — כך חיה משפחה תחת צ'אושסקו. חוויה מיוחדת שהבלוגרים מתלהבים ממנה."}, {"ages": [13, 16], "area": "מרכז", "cat": "museum", "kids": "הזמינו סיור מראש באתר עם דרכונים של כולם (חובה!). שעה, הרבה הליכה. בני 6-9 יתעייפו — קחו את הסיור הקצר.", "lat": 44.4275, "lng": 26.0875, "maps_query": "Palace of the Parliament, Bucharest", "name": "ארמון הפרלמנט", "name_en": "Palatul Parlamentului", "source": {"platform": "Instagram", "url": "https://www.instagram.com/explore/locations/240995710010335/palace-of-the-parliament-bucharest/"}, "tag": "classic", "why": "הבניין המנהלי הכבד בעולם. סיור מודרך של שעה באולמות ענק — הדבר הכי מפורסם בבוקרשט."}, {"ages": [6, 9, 13, 16], "area": "העיר העתיקה", "cat": "rest", "kids": "החצר הפתוחה נוחה למשפחה גדולה, פחות רועש מ-Caru' cu Bere. ערב עם מוזיקה עממית.", "lat": 44.43, "lng": 26.102, "maps_query": "Hanu' lui Manuc, Bucharest", "name": "הנו לוי מנוק", "name_en": "Hanu' lui Manuc", "source": {"by": "TikTok discover", "platform": "TikTok", "url": "https://www.tiktok.com/discover/romanian-restaurant-bucharest"}, "sub": "מקומי", "tag": "classic", "why": "פונדק דרכים מ-1808 עם חצר ענקית — הרומני הכי יפה בעיר העתיקה. מיצ'י, סרמלה, פפנאש."}, {"ages": [9, 13, 16], "area": "מערב העיר", "cat": "mall", "kids": "יום גשום שלם כאן. בגדי נוער: Bershka/Stradivarius/Pull&Bear; ילדים: H&M Kids, Zara Kids.", "lat": 44.4308, "lng": 26.054, "maps_query": "AFI Cotroceni, Bucharest", "name": "קניון AFI Cotroceni", "name_en": "AFI Cotroceni", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d3340332-Reviews-AFI_Cotroceni-Bucharest.html"}, "tag": "classic", "why": "הקניון הגדול ברומניה: 300+ חנויות (Zara, H&M, Bershka, Pull&Bear, Nike), החלקה על קרח כל השנה, IMAX, מוזיאון החושים, פארק חבלים."}, {"ages": [6, 9, 13, 16], "area": "40 דק' דרומית לעיר", "cat": "daytrip", "kids": "מסלולי חבלים לפי גיל (מגיל 4 ומעלה), זיפליין, קיאקים באגם. חצי יום. מונית/Bolt ~150 לאי לכיוון.", "lat": 44.172, "lng": 26.153, "maps_query": "Comana Adventure Park", "name": "פארק ההרפתקאות קומאנה", "name_en": "Comana Adventure Park", "source": {"by": "GetYourGuide", "platform": "אתר", "url": "https://www.getyourguide.com/bucharest-l111/family-friendly-activities-tc1094/"}, "tag": "both", "why": "פארק חבלים גדול ביער + שמורת טבע קומאנה עם דלתא קטנה, קיאקים וסירות. הטיול-יום המומלץ למשפחות."}, {"ages": [9, 13, 16], "area": "יום מלא, 2.5-3 שעות נסיעה לכל כיוון", "cat": "daytrip", "kids": "יום ארוך (12-13 שעות) אבל שווה — הילדים יזכרו את 'טירת דרקולה'. קחו טיול מאורגן במיניבוס פרטי ל-6, לא אוטובוס גדול.", "lat": 45.515, "lng": 25.3672, "maps_query": "Bran Castle", "name": "טירת דרקולה + פלש + בראשוב", "name_en": "Bran Castle, Peleș Castle, Brașov day trip", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/AttractionProductReview-g294458-d15041452-Day_trip_to_Dracula_s_Castle_Peles_Castle_and_Medieval_Brasov-Bucharest.html"}, "tag": "classic", "why": "היום הכי מבוקש מבוקרשט: ארמון פלש (הכי יפה ברומניה), טירת בראן 'של דרקולה' ומרכז ימי-הביניים של בראשוב."}, {"ages": [6, 9, 13, 16], "alt": ["rest", "shabbat"], "area": "Strada Tache Ionescu 9", "cat": "kosher", "kids": "א'-ה' 13:30-21:30. לשבת (19.9) הירשמו מראש דרך חב\"ד. מסעדה ישראלית כשרה נוספת ליד Unirii.", "lat": 44.444, "lng": 26.0975, "maps_query": "Bereshit kosher restaurant, Strada Tache Ionescu 9, Bucharest", "name": "ברשית – כשר חב\"ד", "name_en": "Bereshit (Chabad of Bucharest)", "source": {"by": "Bereshit", "platform": "אתר", "url": "https://kosher-bucharest.com/en/home/"}, "sub": "ישראלי", "tag": "classic", "why": "מסעדה בשרית כשרה למהדרין של חב\"ד + חנות מוצרים כשרים + ארוחות שבת בהרשמה מראש."}, {"ages": [6, 9, 13], "area": "מרכז", "cat": "indoor", "kids": "שעה, בול ליום גשום. הקטנים בשמיים.", "maps_query": "Reptiland Bucharest", "name": "רפטילנד", "name_en": "Reptiland Bucharest", "source": {"by": "GetYourGuide", "platform": "אתר", "url": "https://www.getyourguide.com/bucharest-l111/family-friendly-activities-tc1094/"}, "tag": "trend", "why": "גן זוחלים מקורה — נחשים, תנינים, לטאות. מופיע ברשימות 'פעילויות משפחה' 2026."}, {"ages": [9, 13, 16], "alt": ["shabbat"], "area": "Strada Sfânta Vineri 9, ליד Unirii", "cat": "jewish", "kids": "ביקור 30-40 דק׳. פתוח לרוב א׳-ה׳ בבוקר, בואו עם דרכון/ת.ז. לביטחון. כיפות בכניסה. תפילות שבת.", "lat": 44.4315, "lng": 26.1085, "maps_query": "Templul Coral, Strada Sfanta Vineri 9, Bucharest", "name": "בית הכנסת הכוראלי", "name_en": "Templul Coral (Choral Temple)", "source": {"by": "Uncover Romania", "platform": "אתר", "url": "https://www.uncover-romania.com/attractions/history-culture/churches/choral-temple/"}, "tag": "classic", "why": "בית הכנסת הפעיל והיפה ביותר ברומניה (1867), בסגנון מורי עם צריחים אדומים, שוחזר לאחרונה. מרכז הקהילה היהודית של בוקרשט."}, {"ages": [13, 16], "area": "Strada Vasile Adamache 11", "cat": "jewish", "kids": "מתאים מגיל 10+; לבני 13-16 זה ביקור חשוב. 45 דק׳. שעות משתנות — בדקו מראש, סגור בשבת.", "lat": 44.43, "lng": 26.1105, "maps_query": "Sinagoga Mare, Strada Vasile Adamache 11, Bucharest", "name": "בית הכנסת הגדול + אנדרטת השואה", "name_en": "Sinagoga Mare (Great Synagogue)", "source": {"by": "Uncover Romania", "platform": "אתר", "url": "https://www.uncover-romania.com/attractions/history-culture/museums/great-synagogue-from-bucharest/"}, "tag": "classic", "why": "בית כנסת אשכנזי מ-1848 שמארח תערוכת זיכרון לשואה ברומניה — היסטוריית הקהילה, חוקי הגזע והפוגרום של 1941. עדות מרגשת, 10 דק׳ מהעיר העתיקה."}, {"ages": [13, 16], "area": "Strada Mămulari 3", "cat": "jewish", "kids": "שעה. מדריכים דוברי אנגלית, לפעמים עברית. פתוח בדרך כלל א׳-ה׳ 9:00-13:00 — לכו בבוקר.", "lat": 44.429, "lng": 26.108, "maps_query": "Jewish History Museum, Strada Mamulari 3, Bucharest", "name": "מוזיאון תולדות יהודי רומניה", "name_en": "Muzeul de Istorie a Evreilor din România (Unirea Sfântă Synagogue)", "source": {"by": "JGuide Europe", "platform": "אתר", "url": "https://jguideeurope.org/en/region/romania/wallachia/bucharest/"}, "tag": "classic", "why": "מוזיאון בתוך בית הכנסת 'האיחוד הקדוש' — 2,000 שנות יהדות רומניה, ספרי תורה, תלבושות, ואולם השואה. קטן ומרוכז."}, {"ages": [13, 16], "area": "ליד Piața Unirii", "cat": "jewish", "kids": "20 דק׳ בדרך בין העיר העתיקה לבתי הכנסת. שקט ומכובד — רגע לדבר עם הילדים.", "maps_query": "Holocaust Memorial Bucharest", "name": "אנדרטת השואה הלאומית", "name_en": "Memorialul Holocaustului București", "source": {"by": "Discover Romania Tours", "platform": "אתר", "url": "https://discover-romania-tours.com/bucharest-jewish-heritage-holocaust-memorial/"}, "tag": "classic", "why": "האנדרטה הלאומית לזכר יהודי ורומני רומניה שנספו בשואה — מבנה בטון עם שמות, גלגלי רכבת ומגן דוד. באוויר הפתוח, חינם.", "lat": 44.43287, "lng": 26.09424}, {"ages": [13, 16], "alt": ["show"], "area": "Strada Iuliu Barasch 15", "cat": "jewish", "kids": "בדקו בלוח ההצגות אם יש משהו ל-16-22.9 — יש מופעי מוזיקה שמתאימים למשפחה. כרטיסים זולים.", "lat": 44.4287, "lng": 26.1108, "maps_query": "Teatrul Evreiesc de Stat, Strada Iuliu Barasch 15, Bucharest", "name": "התיאטרון היהודי הממלכתי", "name_en": "Teatrul Evreiesc de Stat", "source": {"by": "World Footprints", "platform": "אתר", "url": "https://worldfootprints.com/compass/europe/jewish-history-behind-the-communist-blocks-of-bucharest/"}, "tag": "both", "why": "אחד התיאטראות היחידים בעולם שעדיין מציג ביידיש (עם תרגום). בניין היסטורי ברובע היהודי הישן."}, {"ages": [6, 9, 13, 16], "alt": ["rest"], "area": "Bulevardul Ion C. Brătianu 29", "cat": "kosher", "kids": "תפריט שהילדים מכירים מהבית — הצלה אחרי כמה ימים של סרמלה. א׳-ד׳ 12:00-22:30, ה׳ עד 23:00, ו׳ 12:00-15:00. סגור בשבת.", "lat": 44.431, "lng": 26.1035, "maps_query": "Zadok Kosher Restaurant, Bulevardul Ion C. Bratianu 29, Bucharest", "name": "צדוק – כשר ישראלי ליד Unirii", "name_en": "Zadok Kosher Restaurant", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurant_Review-g294458-d33032613-Reviews-Zadok_Kosher_Restaurant_Bucharest-Bucharest.html"}, "sub": "ישראלי", "tag": "trend", "why": "מסעדה ישראלית כשרה חדשה יחסית במרכז, 5 דק׳ מהעיר העתיקה: חומוס, פלאפל, שקשוקה, בשרים על האש. הפכה לנקודת מפגש של ישראלים בעיר."}, {"ages": [6, 9, 13, 16], "alt": ["rest", "shabbat"], "area": "מרכז", "cat": "kosher", "kids": "האופציה הנוחה לשבת 18-19.9 — מזמינים סעודות שבת מראש דרך האתר. בשרים על האש שהילדים אוהבים.", "maps_query": "Moise Kosher Restaurant Bucharest", "name": "מוישה – כשר ישראלי-רומני + ארוחות שבת", "name_en": "Moise Kosher Restaurant", "source": {"by": "Moise Group (עברית)", "platform": "אתר", "url": "https://online.moise.group/he/"}, "source2": {"platform": "אתר", "url": "https://www.tripadvisor.com/Restaurant_Review-g294458-d20015703-Reviews-Moise_Kosher_Restaurant-Bucharest.html"}, "sub": "ישראלי", "tag": "classic", "why": "קבוצה ישראלית-יהודית שמפעילה מסעדה בשרית כשרה למהדרין (ישראלי + רומני), מכולת כשרה, דירות אירוח וסעודות שבת בהזמנה. אתר בעברית."}, {"ages": [6, 9, 13, 16], "alt": ["rest"], "area": "מרכז העיר", "cat": "kosher", "kids": "מנות גדולות, שירות סבלני עם ילדים. הזמינו מראש לערב.", "maps_query": "Avraham Kosher restaurant Bucharest", "name": "אברהם – כשר במרכז", "name_en": "Avraham Kosher", "source": {"by": "מטיילים בכיפה 2026", "platform": "אתר", "url": "https://metaylimbkipa.com/kosher-restaurants-abroad/kosher-restaurants-in-bucharest/"}, "source2": {"platform": "אתר", "url": "https://www.tripadvisor.com/Restaurant_Review-g294458-d23947490-Reviews-Avraham_Kosher-Bucharest.html"}, "sub": "ישראלי", "tag": "classic", "why": "מסעדה כשרה למהדרין באווירה משפחתית: בשרים על האש, דגים, סלטים ישראליים. מומלצת באתרי הכשרות הישראליים."}, {"ages": [13, 16], "alt": ["rest"], "area": "מרכז", "cat": "kosher", "kids": "מסעדת שף — מתאים לערב של ההורים או לארוחה חגיגית אחת עם הילדים הגדולים. הזמנה מראש.", "maps_query": "Aubergine Restaurant Bucharest", "name": "אוברז'ין – השף הישראלי רונן", "name_en": "Aubergine Restaurant Bucharest", "source": {"by": "למטייל", "platform": "אתר", "url": "https://www.lametayel.co.il/pois/v04e4"}, "sub": "גורמה", "tag": "both", "why": "מסעדת שף (לא כשרה) בבעלות ישראלית — השף רונן יוצא מהמטבח לדבר עברית עם האורחים. מדורגת גבוה ב'למטייל' ובטריפאדוויזור.", "lat": 44.43111, "lng": 26.09991}, {"ages": [9, 13, 16], "area": "Berăria H, פארק הרסטראו", "cat": "show", "kids": "ברריה H מקבל משפחות; הגדולים יכירו את השירים מטיקטוק. יום ההמראה — רק אם הטיסה מאוחרת. כרטיסים ב-iabilet.ro.", "lat": 44.476, "lng": 26.079, "maps_query": "Beraria H, Bucharest", "name": "סמיילי בברריה H – 22.9", "name_en": "Smiley live at Berăria H", "source": {"by": "AllEvents", "platform": "אתר", "url": "https://allevents.in/bucharest/concerts"}, "tag": "trend", "why": "Smiley — כוכב הפופ הכי גדול ברומניה — מופיע ב-22.9 ב-19:00 בברריה H, אולם הבירה הענק בפארק הרסטראו. הופעה + ארוחה באותו מקום, אווירה של פסטיבל."}, {"ages": [13, 16], "area": "Arenele Romane, פארק קרול", "cat": "show", "kids": "אמפיתיאטרון פתוח, נעים בערב ספטמבר. מתאים להורים ולבני 13-16 שאוהבים מוזיקה; הקטנים ישתעממו. כרטיסים ב-iabilet.ro.", "lat": 44.414, "lng": 26.096, "maps_query": "Arenele Romane, Bucharest", "name": "גארו – Arenele Romane, 20.9", "name_en": "Garou – The Best Of, Arenele Romane", "source": {"by": "iaBilet", "platform": "אתר", "url": "https://www.iabilet.ro/bilete-in-bucuresti/bilete-concerte/"}, "tag": "both", "why": "הזמר הקנדי-צרפתי Garou (Notre-Dame de Paris) במופע 'The Best Of' ב-20.9 ב-20:00 באמפיתיאטרון הפתוח Arenele Romane — מקום יפהפה בפארק קרול."}, {"ages": [13, 16], "area": "Ateneul Român, Calea Victoriei", "cat": "show", "kids": "קונצרט קלאסי — לבני 13-16 עם סבלנות, או להורים. ילדים קטנים לא. אם לא באים לקונצרט — יש סיורים באתנאום בבוקר.", "lat": 44.4413, "lng": 26.0972, "maps_query": "Ateneul Roman, Bucharest", "name": "פסטיבל הפסנתר הבינלאומי – האתנאום, 22.9", "name_en": "Bucharest International Piano Festival, Romanian Athenaeum", "source": {"by": "AllEvents", "platform": "אתר", "url": "https://allevents.in/bucharest/september"}, "tag": "classic", "why": "קונצרט פתיחה של פסטיבל הפסנתר ב-22.9 ב-19:00 באתנאום — האולם הכי יפה בבוקרשט (כיפה מצוירת, 1888). שווה גם רק בשביל האולם."}, {"ages": [9, 13, 16], "area": "אונליין", "cat": "show", "kids": "סננו לפי תאריך; רוב ההופעות ב-20:00. Berăria H ו-Arenele Romane הכי נוחים למשפחה.", "maps_query": "Bucharest", "name": "iaBilet – כל ההופעות בבוקרשט", "name_en": "iaBilet Bucharest concerts", "source": {"by": "iaBilet", "platform": "אתר", "url": "https://www.iabilet.ro/bilete-in-bucuresti/bilete-concerte/"}, "tag": "classic", "why": "אתר הכרטיסים המרכזי של רומניה — רוק, פופ, סטנד-אפ, קרקס, תיאטרון. הלו\"ז המלא ל-16–22.9 מתעדכן שם."}, {"ages": [6, 9, 13, 16], "alt": ["daytrip", "natpark"], "area": "40 ק\"מ צפונית לעיר", "cat": "beach", "kids": "סירה/קיאק על אגם שקט — כיף לכל הגילאים; בני 13-16 יאהבו את סיפור דרקולה במנזר (סירה קצרה לאי). חצי יום. בספטמבר המים עדיין נעימים.", "lat": 44.71, "lng": 26.175, "maps_query": "Snagov Club, Snagov", "name": "אגם סנאגוב – סירות, קיאקים וחוף", "name_en": "Lake Snagov (Snagov Club)", "source": {"by": "Beautiful Romania", "platform": "אתר", "url": "https://beautiful-romania.com/viewtopic.php?t=312"}, "source2": {"by": "Romania Insider", "platform": "אתר", "url": "https://www.romania-insider.com/beat-the-heat-ten-cool-places-near-bucharest-to-escape-the-citys-stifling-summer-days"}, "tag": "classic", "why": "האגם הכי יפה ליד בוקרשט: שמורת טבע עם חבצלות מים, מנזר סנאגוב על אי (קבר דרקולה לפי האגדה), חופים פרטיים וציבוריים, השכרת סירות וקיאקים ב-Snagov Club."}, {"ages": [6, 9, 13, 16], "alt": ["citypark"], "area": "פארק הרסטראו, צפון העיר", "cat": "beach", "kids": "סירת פדלים ל-4 + עוד אחת — הקטנים משתגעים. 45 דק׳ מספיק. שלבו עם מוזיאון הכפר ליד.", "lat": 44.475, "lng": 26.083, "maps_query": "Herastrau Lake boat rental, Bucharest", "name": "אגם הרסטראו – סירות פדלים", "name_en": "Herăstrău Lake boat rental", "source": {"by": "TravelTriangle", "platform": "אתר", "url": "https://traveltriangle.com/blog/lakes-in-bucharest/"}, "tag": "classic", "why": "האגם הגדול בעיר, בלב הפארק הכי גדול. סירות פדלים ומנוע להשכרה, שייט קטן ליד המזח, וטרסות על המים."}, {"ages": [6, 9, 13, 16], "alt": ["citypark"], "area": "מערב העיר, Crângași", "cat": "beach", "kids": "חוף לרגליים במים (לא שחייה אמיתית), אופניים/קורקינט מסביב. הכי טוב ביום חול. מטרו Crângași.", "lat": 44.446, "lng": 26.018, "maps_query": "Lacul Morii, Bucharest", "name": "לאקול מוריי – החוף העירוני", "name_en": "Lacul Morii", "source": {"by": "Bucharest Apartment", "platform": "אתר", "url": "https://bucharestapartment.net/lacul-morii/"}, "tag": "both", "why": "האגם הגדול ביותר בבוקרשט עם רצועת חוף חולי, דשא, שביל אופניים סביב וסירות בקיץ. אזור פיקניק של המקומיים."}, {"ages": [6, 9, 13, 16], "alt": ["theme", "beach"], "area": "מזרח העיר (Pantelimon)", "cat": "water", "kids": "מושלם לבני 6-13; לבדוק שעדיין פתוח באמצע ספטמבר (עונה עד סוף ספטמבר, תלוי מזג אוויר). מגלשות עם מגבלת גובה.", "lat": 44.447, "lng": 26.213, "maps_query": "Divertiland Water Park, Bucharest", "name": "דיברטילנד – פארק המים", "name_en": "Divertiland Water Park", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d4556481-Reviews-Divertiland_Water_Park-Bucharest.html"}, "source2": {"by": "Divertiland", "platform": "אתר", "url": "https://www.divertiland.ro/?lang=en"}, "tag": "classic", "why": "פארק מים פתוח: 7 בריכות, 22 מגלשות, 70+ מתקנים. הזול והעממי לעומת Therme."}, {"ages": [6, 9, 13, 16], "alt": ["hike"], "area": "דרום-מזרח העיר", "cat": "natpark", "kids": "הליכה קלה של שעה, משקפת לילדים, לא בשמש הצהריים. כניסה חופשית.", "lat": 44.403, "lng": 26.129, "maps_query": "Parcul Natural Vacaresti, Bucharest", "name": "דלתא ואקרשטי – טבע בתוך העיר", "name_en": "Văcărești Nature Park", "source": {"by": "Romania Insider", "platform": "אתר", "url": "https://www.romania-insider.com/beat-the-heat-ten-cool-places-near-bucharest-to-escape-the-citys-stifling-summer-days"}, "tag": "trend", "why": "פארק טבע עירוני ייחודי — ביצה ענקית שנוצרה בשטח של אגם קומוניסטי נטוש, עם 100+ מיני ציפורים ושבילי עץ. 'הדלתא של בוקרשט'."}, {"ages": [6, 9, 13, 16], "alt": ["hike", "citypark"], "area": "15 ק\"מ צפון-מערב", "cat": "daytrip", "kids": "שעתיים: סיבוב בפארק + הארמון (קצר) + גלידה. סירות בקיץ. מונית ~25 דק׳.", "lat": 44.529, "lng": 25.99, "maps_query": "Mogosoaia Palace", "name": "ארמון מוגושואיה", "name_en": "Mogoșoaia Palace", "source": {"by": "Romania Insider", "platform": "אתר", "url": "https://www.romania-insider.com/beat-the-heat-ten-cool-places-near-bucharest-to-escape-the-citys-stifling-summer-days"}, "tag": "classic", "why": "ארמון ברנקובן מ-1702 על אגם, פארק ענק להליכה, מסעדות על המים. הטיול הקצר הכי יפה מהעיר."}, {"ages": [6, 9, 13, 16], "alt": ["theme", "natpark"], "area": "Balotești, ליד Therme", "cat": "extreme", "kids": "מסלולים מגיל 4 ועד 'אקסטרים' לבני 13-16; פיינטבול מגיל 14. חצי יום. שלבו עם Therme באותו יום.", "lat": 44.612, "lng": 26.064, "maps_query": "Edenland Park, Balotesti", "name": "Edenland – פארק חבלים ואקסטרים", "name_en": "Edenland Park Balotești", "source": {"by": "Kids Are A Trip 2026", "platform": "אתר", "url": "https://kidsareatrip.com/best-things-to-do-in-bucharest-with-kids/"}, "tag": "both", "why": "פארק הרפתקאות ביער: מסלולי חבלים ברמות שונות, קיר טיפוס, זיפליין, רכיבה על סוסים, פיינטבול, אגם. 5 דק׳ מ-Therme."}, {"ages": [6, 9, 13], "alt": ["luna"], "area": "מזרח העיר", "cat": "indoor", "kids": "בני 6-12 בעיקר; בני 13-16 יעדיפו קארטינג/VR. 2-3 שעות.", "lat": 44.447, "lng": 26.213, "maps_query": "Divertiland Playland, Bucharest", "name": "Divertiland Playland – מקורה", "name_en": "Divertiland Playland", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d12278141-Reviews-Divertiland_Playland-Bucharest.html"}, "tag": "classic", "why": "מתחם משחקים מקורה ענק: טרמפולינות, מתנפחים, מסלול סקי מקורה. ליום גשום."}, {"ages": [6, 9, 13, 16], "alt": ["theme"], "area": "AFI Cotroceni", "cat": "indoor", "kids": "תוכנית ליום גשום: החלקה (שעה) + מוזיאון החושים + סרט. מתאים לכל הגילאים.", "lat": 44.4308, "lng": 26.054, "maps_query": "AFI Cotroceni ice rink, Bucharest", "name": "החלקה על קרח + IMAX ב-AFI", "name_en": "AFI Cotroceni ice rink & IMAX", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d3340332-Reviews-AFI_Cotroceni-Bucharest.html"}, "tag": "classic", "why": "משטח החלקה על קרח פעיל כל השנה, IMAX, פארק חבלים מקורה ומרכז משחקים — הכל בקניון אחד עם מוזיאון החושים."}, {"ages": [6, 9, 13, 16], "alt": ["souvenir"], "area": "Obor, מטרו Obor", "cat": "market", "kids": "מיצ'י + לחם + חרדל ב-15 לאי לילד = ארוחת צהריים. שעה, בבוקר. שמרו על הילדים בצפיפות.", "lat": 44.45, "lng": 26.127, "maps_query": "Piata Obor, Bucharest", "name": "שוק אובור – הכי גדול ברומניה", "name_en": "Piața Obor", "source": {"by": "Best of TikTok/Instagram guide", "platform": "אתר", "url": "https://airial.travel/attractions/romania/bucure%C8%99ti/obor-market-qHS1w9ZE"}, "source2": {"by": "Visit Bucharest", "platform": "אתר", "url": "https://visitbucharest.today/bucharest-obor-market/"}, "tag": "both", "why": "השוק הגדול ברומניה: פירות, גבינות, דבש, וטרסות המיצ'י (נקניקיות על האש) המפורסמות ליד — חוויית רחוב אמיתית, מצולמת בטיקטוק."}, {"ages": [6, 9, 13, 16], "area": "ליד Calea Victoriei", "cat": "market", "kids": "קניית פירות לדרך. 20 דק׳.", "lat": 44.444, "lng": 26.096, "maps_query": "Piata Amzei, Bucharest", "name": "שוק סן איון החדש / Piața Amzei", "name_en": "Piața Amzei market", "source": {"by": "Wanderlog", "platform": "אתר", "url": "https://wanderlog.com/list/geoCategory/871470/best-food-halls-market-halls-and-food-courts-in-bucharest"}, "tag": "classic", "why": "שוק מרכזי קטן ונקי ליד קאלאה ויקטוריי — פירות, מאפים, פרחים. נוח לעצירה מהירה בלב העיר."}, {"ages": [6, 9, 13, 16], "alt": ["rest"], "area": "פארק הרסטראו", "cat": "kidsfood", "kids": "מנות ילדים, מקום לרוץ, הופעה בערב. הזמינו שולחן. ב-22.9 מופיע Smiley.", "lat": 44.476, "lng": 26.079, "maps_query": "Beraria H, Bucharest", "name": "ברריה H – אולם הבירה הענק", "name_en": "Berăria H", "source": {"by": "AllEvents", "platform": "אתר", "url": "https://allevents.in/bucharest/concerts"}, "sub": "מקומי", "tag": "both", "why": "אולם הבירה הגדול באירופה (2,000 מקומות) בפארק הרסטראו: מיצ'י, שניצלים, פיצות, הופעות חיות כל ערב. רועש, שמח, ידידותי לילדים."}, {"ages": [6, 9, 13, 16], "alt": ["dessert", "breakfast"], "area": "מרכז", "cat": "kidsfood", "kids": "הילדים בוחרים תוספת (נוטלה/גבינה). ארוחת בוקר או נשנוש ב-15 לאי.", "maps_query": "Scovergaria Micai, Bucharest", "name": "סקוברגריה מיקאי – בצק מטוגן", "name_en": "Scovergăria Micăi", "source": {"by": "TikTok discover", "platform": "אתר", "url": "https://www.tiktok.com/discover/what-to-eat-bucharest"}, "tag": "trend", "why": "סקוברגי — בצק רומני מטוגן עם תוספות מתוקות או מלוחות, מהיר וזול. מופיע בכל רשימות 'מה לאכול בבוקרשט' בטיקטוק.", "lat": 44.43279, "lng": 26.09767}, {"ages": [13, 16], "area": "מרכז", "cat": "clothes", "kids": "להורים — הילדים ישתעממו אחרי 20 דק׳; שלבו עם Grand Café או קרטורשטי.", "lat": 44.44, "lng": 26.096, "maps_query": "Calea Victoriei, Bucharest", "name": "קאלאה ויקטוריי – רחוב הקניות", "name_en": "Calea Victoriei shopping", "source": {"by": "Corinthia", "platform": "אתר", "url": "https://www.corinthia.com/en-gb/bucharest/discover-bucharest/a-day-on-bucharests-most-iconic-street-calea-victoriei/"}, "sub": "נשים", "tag": "classic", "why": "השדרה הראשית: מותגי יוקרה (Louis Vuitton, Burberry, BOSS), בוטיקים רומניים, וקונדיטוריות בדרך. הליכה יפה בין Piața Victoriei לעיר העתיקה.", "alt": ["souvenir"]}, {"ages": [9, 13, 16], "alt": ["mall"], "area": "צפון העיר, ליד Therme", "cat": "clothes", "kids": "בני 13-16 ימצאו הכל. בדרך ל/מ-Therme. יש IKEA צמוד.", "lat": 44.508, "lng": 26.086, "maps_query": "Baneasa Shopping City", "name": "Băneasa Shopping City – בגדים לנוער", "name_en": "Băneasa Shopping City", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attractions-g294458-Activities-c26-t143-Bucharest.html"}, "sub": "נוער", "tag": "classic", "why": "הקניון היוקרתי של בוקרשט: Zara, Bershka, Pull&Bear, Stradivarius, Nike, Adidas, Apple. פחות עמוס מ-AFI."}, {"ages": [6, 9, 13, 16], "alt": ["mall"], "area": "מערב העיר", "cat": "clothes", "kids": "הכי קל לקנות לכל ה-4 במקום אחד. LC Waikiki = בגדי ילדים זולים וטובים.", "lat": 44.4308, "lng": 26.054, "maps_query": "AFI Cotroceni, Bucharest", "name": "AFI Cotroceni – ילדים וגברים", "name_en": "AFI Cotroceni fashion", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d3340332-Reviews-AFI_Cotroceni-Bucharest.html"}, "sub": "ילדים", "tag": "classic", "why": "300+ חנויות: H&M Kids, Zara Kids, LC Waikiki (זול לילדים), Decathlon, Massimo Dutti לגברים."}, {"ages": [6, 9, 13, 16], "area": "העיר העתיקה", "cat": "souvenir", "kids": "תקציב מזכרות לכל ילד — 50 לאי מספיק. מגנטים, מסכות דרקולה, שוקולד ROM.", "lat": 44.432, "lng": 26.1, "maps_query": "Strada Lipscani, Bucharest", "name": "שוק העתיקות ומזכרות – Lipscani", "name_en": "Lipscani souvenir shops", "source": {"by": "Shopping Cities", "platform": "אתר", "url": "https://www.shoppingcities.com/romania/bucharest/"}, "tag": "classic", "why": "רחובות Lipscani ו-Gabroveni מלאים חנויות מזכרות, קרמיקה מצוירת, חולצות רקומות (ie) ומגנטים. גם Cărturești למתנות איכותיות."}, {"ages": [6, 9, 13, 16], "area": "בכל פינה", "cat": "pharmacy", "kids": "מים, פירות, חטיפים — בסופר, לא בעיר העתיקה. בית מרקחת: Catena, יש בכל שכונה, חלקם 24/7.", "maps_query": "Mega Image, Bucharest", "name": "Mega Image / Carrefour + Catena", "name_en": "Mega Image supermarket & Catena pharmacy", "source": {"by": "Bucharest.ro", "platform": "אתר", "url": "https://www.bucharest.ro/articles/the-only-mall-in-bucharest-open-on-january-1-2026-here-you-can-also-find-a-hypermarket-with-the-same-schedule-939"}, "tag": "classic", "why": "Mega Image = הסופר השכונתי (כמו AM:PM), Carrefour בקניונים, Catena/Dr.Max = רשתות בתי המרקחת הגדולות. פתוחים עד מאוחר."}, {"ages": [6, 9, 13, 16], "area": "מרכז", "cat": "hotel", "kids": "בחרו מרחק הליכה מהעיר העתיקה ומטרו Universitate — הכל במרחק 15 דק׳. Booking עם 2 מבוגרים + 4 ילדים כבר מוגדר בכפתור התחבורה.", "lat": 44.4355, "lng": 26.1015, "maps_query": "Hotels near Universitate, Bucharest", "name": "מלונות למשפחה של 6 – איפה לישון", "name_en": "Family hotels Bucharest (Old Town / Universitate)", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attractions-g294458-Activities-Bucharest.html"}, "tag": "classic", "why": "ל-6 אנשים: דירות נופש בעיר העתיקה/Universitate (2-3 חדרים) זולות יותר מ-2 חדרי מלון. מלונות עם חדרים משפחתיים: Novotel City Centre, Radisson Blu, Mercure Unirii."}, {"ages": [6, 9, 13], "alt": ["hike", "theme"], "area": "דרום העיר, מטרו Tineretului", "cat": "citypark", "kids": "אופניים/קורקינט מסביב לאגם + עיר הילדים. חצי יום לקטנים.", "lat": 44.409, "lng": 26.106, "maps_query": "Parcul Tineretului, Bucharest", "name": "פארק טינרטולוי – הפארק של הילדים", "name_en": "Tineretului Park", "source": {"by": "Trips Notes", "platform": "אתר", "url": "https://tripsnotes.com/things-to-do-with-kids-in-bucharest/"}, "tag": "classic", "why": "פארק ענק עם אגם, מגרשי משחקים, השכרת אופניים ועיר הילדים (Orășelul Copiilor) בתוכו."}, {"ages": [6, 9, 13, 16], "alt": ["hike", "view"], "area": "מרכז, ליד Universitate", "cat": "citypark", "kids": "סירת פדלים (30 דק׳), גלידה, מגרש משחקים. חינם.", "lat": 44.436, "lng": 26.091, "maps_query": "Cismigiu Gardens, Bucharest", "name": "גני צ'ישמיג'יו", "name_en": "Cișmigiu Gardens", "source": {"by": "Travelynn Family 2026", "platform": "אתר", "url": "https://travelynnfamily.com/bucharest-with-kids/"}, "tag": "classic", "why": "הפארק הוותיק והיפה במרכז: אגם עם סירות, שדרות עצים, פינות משחק. הפסקה מושלמת בין העיר העתיקה לקאלאה ויקטוריי."}, {"ages": [13, 16], "area": "גג בעיר העתיקה, Strada Smârdan", "cat": "view", "kids": "ביום — מתאים למשפחה (מוקטיילים לילדים); בערב מאוחר סצנה של צעירים. לבני 13-16 מגניב.", "lat": 44.4318, "lng": 26.0995, "maps_query": "Pura Vida Sky Bar, Bucharest", "name": "Pura Vida Sky Bar – גג בעיר העתיקה", "name_en": "Pura Vida Sky Bar", "source": {"by": "Lovin' Romania", "platform": "אתר", "url": "https://lovinromania.com/amazing-rooftop-and-sky-bars-in-bucharest/"}, "tag": "trend", "why": "גג פופולרי בעיר העתיקה עם נוף על הגגות והכנסיות, קוקטיילים ומוקטיילים. הרבה סרטוני שקיעה משם."}, {"ages": [6, 9, 13, 16], "area": "Șoseaua Kiseleff 32, פארק הרסטראו", "cat": "rest", "kids": "תפריט ילדים, אווירה שהנוער אוהב, חולצת מזכרת. שלבו עם סירות על האגם.", "lat": 44.47, "lng": 26.079, "maps_query": "Hard Rock Cafe Bucharest", "name": "הארד רוק קפה – הרסטראו", "name_en": "Hard Rock Cafe Bucharest", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurant_Review-g294458-d1088637-Reviews-Hard_Rock_Cafe-Bucharest.html"}, "sub": "אמריקאי", "tag": "classic", "why": "ההארד רוק המקומי, בכניסה לפארק הרסטראו — בורגרים, צלעות, מילקשייקים, גיטרות על הקירות ומוזיקה חיה בערבים."}, {"ages": [6, 9, 13, 16], "area": "מספר סניפים (Calea Victoriei, Băneasa)", "cat": "rest", "kids": "רולים מטוגנים ואדממה לקטנים; בני 13-16 יאהבו. הזמינו מגש ל-6.", "maps_query": "Zen Sushi, Bucharest", "name": "זן סושי", "name_en": "Zen Sushi Bucharest", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurants-g294458-Bucharest.html"}, "sub": "סושי", "tag": "classic", "why": "רשת הסושי הוותיקה והמדורגת בבוקרשט — מגשים גדולים, רולים לילדים, מחירים סבירים לאירופה.", "lat": 44.45137, "lng": 26.09348}, {"ages": [6, 9, 13, 16], "area": "מרכז", "cat": "rest", "kids": "מרגריטה לילדים, פיצות לחלוקה. קטן ועמוס — לכו ב-12:30 או הזמינו.", "maps_query": "Animaletto Pizza Bar, Bucharest", "name": "אנימלטו פיצה בר", "name_en": "Animaletto Pizza Bar", "source": {"by": "2foodtrippers", "platform": "אתר", "url": "https://www.2foodtrippers.com/bucharest-food-guide/"}, "sub": "פיצה", "tag": "trend", "why": "הפיצה הנפוליטנית הכי מדוברת בעיר — תנור עצים, בצק תופח, תור בערב. מופיע בכל רשימות 'הפיצה הכי טובה בבוקרשט'.", "lat": 44.44821, "lng": 26.09534}, {"ages": [6, 9, 13, 16], "area": "סניפים ליד Romană ו-Herăstrău", "cat": "rest", "kids": "מנות ילדים, מקום למשפחה של 6 בלי הזמנה מסובכת.", "maps_query": "Trattoria Il Calcio, Bucharest", "name": "טרטוריה איל קלצ'ו", "name_en": "Trattoria Il Calcio", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurants-g294458-Bucharest.html"}, "sub": "פיצה", "tag": "classic", "why": "רשת איטלקית מקומית ותיקה עם פיצות, פסטות וטרסות גדולות — הבחירה הבטוחה למשפחה גדולה.", "lat": 44.43436, "lng": 26.10185}, {"ages": [6, 9, 13, 16], "area": "מרכז, ליד Piața Romană", "cat": "rest", "kids": "בופה במשקל = כל ילד לוקח מה שהוא רוצה. גם הקטנים מוצאים משהו.", "maps_query": "Rawdia, Bucharest", "name": "ראודיה – טבעוני", "name_en": "Rawdia", "source": {"by": "Tripadvisor vegan list", "platform": "אתר", "url": "https://www.tripadvisor.com/Restaurants-g294458-zfz10697-Bucharest.html"}, "sub": "צמחוני", "tag": "both", "why": "המסעדה הטבעונית הכי ידועה בבוקרשט — בופה במשקל, מנות ראו וחמות, קינוחים בלי סוכר.", "lat": 44.46117, "lng": 26.09916}, {"ages": [13, 16], "alt": ["mall"], "area": "Promenada Mall, Floreasca (ליד Sky Tower)", "cat": "clothes", "kids": "קניות לאבא + צהריים ב-NOR באותו בניין. הילדים — Food court.", "lat": 44.4775, "lng": 26.103, "maps_query": "Promenada Mall, Bucharest", "name": "Promenada / AFI – בגדי גברים", "name_en": "Promenada Mall menswear", "source": {"by": "Tripadvisor", "platform": "אתר", "url": "https://www.tripadvisor.com/Attractions-g294458-Activities-c26-t143-Bucharest.html"}, "sub": "גברים", "tag": "classic", "why": "Promenada — קניון מודרני עם Massimo Dutti, Zara Man, COS, Nike, Peek & Cloppenburg. קרוב ל-NOR (קומה 36) לארוחה עם נוף."}, {"name": "שבוע האוכל של בוקרשט", "name_en": "Bucharest Food Week 2026", "cat": "rest", "tag": "trend", "area": "בכל רחבי העיר", "why": "פסטיבל אוכל עירוני עם תפריטים קבועים במחירים נוחים (69/119/189 ליי) בלמעלה מ-100 מהמסעדות המובילות בעיר, מתקיים 14–20.9.2026 — חופף כמעט לכל שבוע הטיול.", "kids": "הזדמנות טובה לנסות כמה מסעדות שף בלי לשבור את התקציב; בדקו מראש דרך אתר האירוע אילו מסעדות משתתפות הכי מתאימות לילדים (יש גם אופציות יומיומיות כמו סושי ופיצה, לא רק פיין-דיינינג).", "ages": [9, 13, 16], "source": {"platform": "אתר", "url": "https://www.revoblog.ro/bucharest-food-week-2026/", "by": ""}, "maps_query": "Bucharest Food Week restaurants 2026"}, {"name": "קרגו – \"Te Chem\", Arenele Romane", "name_en": "Cargo – \"Te Chem\", Arenele Romane", "cat": "show", "tag": "trend", "area": "Arenele Romane, פארק קרול", "why": "קרגו — אחת מלהקות הרוק הוותיקות והאהובות ברומניה — עולה עם מופע קונספט חדש בשם \"Te Chem\" ב-18.9.2026 באמפיתיאטרון הפתוח Arenele Romane, אותו מקום שבו מופיע גם גארו ב-20.9.", "kids": "מתאים בעיקר להורים ולבני 13-16 שאוהבים רוק; הקטנים כנראה ישתעממו. אמפיתיאטרון פתוח, נעים בערב ספטמבר. כרטיסים דרך אתרי המכירה הרומניים (infomusic.ro / iabilet.ro).", "ages": [13, 16], "lat": 44.414, "lng": 26.096, "source": {"platform": "אתר", "url": "https://www.infomusic.ro/agenda/cargo-concert-arenele-romane-2026/", "by": ""}, "maps_query": "Arenele Romane, Bucharest"}, {"name": "יום כיפור בבוקרשט – 20–21.9", "name_en": "Yom Kippur in Bucharest (Sept 20-21, 2026)", "cat": "shabbat", "alt": ["jewish"], "tag": "classic", "area": "הקהילה היהודית, מרכז העיר", "why": "שימו לב: יום כיפור 2026 חל בדיוק באמצע הטיול — כניסת הצום בערב 20.9 ויציאתו בערב 21.9. חב\"ד בוקרשט ובית הכנסת הכוראלי (Templul Coral) הם מרכז הקהילה ומקיימים תפילות לציבור.", "kids": "תכננו מראש: מסעדות כשריות (ברשית, צדוק, מוישה) עשויות לשנות שעות פתיחה סביב הצום; אם רוצים להתפלל, פנו לחב\"ד מראש לתיאום מקום ותפילות עבור המשפחה.", "ages": [13, 16], "lat": 44.4315, "lng": 26.1085, "source": {"platform": "אתר", "url": "https://www.chabad.org/jewish-centers/118397/Bucharest/Synagogue/Chabad-Lyubavitsh-of-Romania", "by": ""}, "maps_query": "Templul Coral, Bucharest"}, {"name": "מגה מול", "name_en": "Mega Mall Bucharest", "cat": "mall", "tag": "classic", "area": "Pantelimon, מזרח העיר", "why": "הקניון הגדול בבוקרשט: מבחר החנויות הרחב ביותר בעיר, אזור מסעדות ענק וקולנוע עם 4DX.", "kids": "בן 6 ו-9: הקולנוע ב-4DX (כיסאות שזזים) הוא אטרקציה בפני עצמה. בני 13 ו-16: כל מותגי האופנה במקום אחד. תוכנית מושלמת ליום גשום.", "ages": [6, 9, 13, 16], "tip": "ה-4DX נמכר מראש בסופי שבוע — הזמינו כרטיסים בבוקר.", "source": {"platform": "אתר", "url": "https://www.inyourpocket.com/bucharest/best-shopping-malls-in-bucharest_77088f"}, "maps_query": "Mega Mall, Bulevardul Pierre de Coubertin, Bucharest", "lat": 44.44178, "lng": 26.15221}, {"name": "פארקלייק", "name_en": "ParkLake Shopping Center", "cat": "mall", "tag": "classic", "area": "Titan, ליד פארק A.I. Cuza", "why": "קניון שתוכנן סביב שלושה רעיונות — טבע, הפארק והמשפחה. צמוד לפארק גדול עם אגם, אז אפשר לשלב קניות עם שעה בחוץ.", "kids": "היתרון על פני קניון רגיל: יוצאים מהקניון ישר לפארק עם אגם ומגרשי משחקים. טוב כשהקטנים כבר לא יכולים לראות עוד חנות.", "ages": [6, 9, 13, 16], "tip": "שלבו: קניות בבוקר, פארק A.I. Cuza אחר הצהריים.", "source": {"platform": "אתר", "url": "https://www.inyourpocket.com/bucharest/best-shopping-malls-in-bucharest_77088f"}, "maps_query": "ParkLake Shopping Center, Strada Liviu Rebreanu, Bucharest", "lat": 44.42067, "lng": 26.14963}, {"name": "פאשן האוס אאוטלט", "name_en": "FASHION HOUSE Outlet Centre Militari", "cat": "mall", "alt": ["clothes"], "sub": "ילדים", "tag": "classic", "area": "Militari, מערב העיר (Chiajna)", "why": "מרכז האאוטלט של בוקרשט — מותגים בינלאומיים במחירים מוזלים לאורך כל השנה, בקומה אחת מתוחמת.", "kids": "כאן קונים בגדים ל-4 הילדים בלי לשבור את התקציב. אין אטרקציות לילדים במקום עצמו, אז זו עצירה ממוקדת ולא יום שלם.", "ages": [6, 9, 13, 16], "tip": "מחוץ למרכז — הגיעו ב-Bolt, זה בערך 25 דקות מהעיר העתיקה.", "source": {"platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d6132033-Reviews-Fashion_House_Outlet_Centre_Militari-Bucharest.html"}, "maps_query": "Fashion House Outlet Centre Militari, Bucharest"}, {"name": "TRAPPED — חדרי בריחה מגיל 7", "name_en": "TRAPPED Escape Room Bucharest", "cat": "escape", "tag": "both", "area": "Strada Vasile Lascăr 88 + Veranda Mall", "why": "הרשת הגדולה ברומניה, והיחידה עם חדרים שבנויים במיוחד לילדים: Superkids ו-Jumanji מגיל 7, עם הדרכה באנגלית.", "kids": "בני 9, 13 ו-16 — מושלם, וקבוצה של 6 היא בדיוק הגודל הנכון. בן 6 מתחת לגיל המינימום (7), אז או שהוא נשאר עם הורה בחוץ או שמחכים.", "ages": [9, 13, 16], "tip": "בקשו הדרכה באנגלית בהזמנה, וציינו את גיל הילדים — הם מתאימים את רמת הרמזים.", "source": {"platform": "אתר", "url": "https://gokid.ro/escape-rooms-bucharest-for-adventurous-children/"}, "maps_query": "Trapped Escape Room, Strada Vasile Lascar 88, Bucharest", "lat": 44.44304, "lng": 26.11031}, {"name": "LOCKED IN — דרקולה ושר הטבעות", "name_en": "LOCKED IN Escape Room Bucharest", "cat": "escape", "tag": "trend", "area": "Strada Culmea Veche 12, סקטור 3", "why": "חדרים מגיל 7 עם תפאורות מושקעות: 'הסוד של דרקולה', 'שר הטבעות — המסע' ו'אינדיאנה ג׳ונס'. 60-90 דקות.", "kids": "'הסוד של דרקולה' עובד מצוין בבוקרשט — הילדים כבר שמעו על טירת בראן. בן 13 ו-16 יתחברו לשר הטבעות. מגיל 7, כך שבן 6 עדיין מחוץ לתמונה.", "ages": [9, 13, 16], "tip": "החדרים הארוכים (90 דק׳) מתאימים לגדולים; לקטנים בחרו 60 דקות.", "source": {"platform": "אתר", "url": "https://gokid.ro/escape-rooms-bucharest-for-adventurous-children/"}, "maps_query": "Locked In Escape Room, Strada Culmea Veche, Bucharest", "lat": 44.43433, "lng": 26.11043}, {"name": "סימביו — חצר גן נסתרת", "name_en": "Simbio", "cat": "breakfast", "alt": ["cafe"], "tag": "trend", "area": "Mântuleasa, מרכז העיר", "why": "חצר גן פנימית מוסתרת שנחשבת לאחת היפות בעיר, עם שקשוקה, פרנץ׳ טוסט וקפה מצוין. פתוח מ-9:00.", "kids": "החצר הפתוחה מאפשרת לילדים לזוז בלי להפריע לאף אחד — נדיר בארוחת בוקר בעיר. השקשוקה מוכרת להם מהבית.", "ages": [6, 9, 13, 16], "tip": "בסופי שבוע פותחים ב-10:00 ומתמלא — הגיעו לפני 11:00.", "source": {"platform": "אתר", "url": "https://salutbucuresti.ro/en/guides/brunch/"}, "maps_query": "Simbio, Bucharest", "lat": 44.43501, "lng": 26.11192}, {"name": "סיריאל קראנץ׳ — דגני בוקר וקינוחים", "name_en": "Cereal Crunch", "cat": "breakfast", "alt": ["kidsfood", "dessert"], "tag": "trend", "area": "מספר סניפים בעיר", "why": "מקום צבעוני ומשחקי שמוקדש לדגני בוקר, פנקייקים וטוסט אבוקדו — מתואר כלהיט אצל משפחות.", "kids": "זה המקום שבו בן 6 ובן 9 בוחרים לבד מה לשים בקערה ויוצאים מרוצים. גם הגדולים לא יתלוננו — יש טוסטים מלוחים.", "ages": [6, 9, 13, 16], "tip": "פתוח 9:00-21:00, אז זה עובד גם כקינוח ערב אחרי סיבוב בעיר העתיקה.", "source": {"platform": "אתר", "url": "https://salutbucuresti.ro/en/guides/brunch/"}, "maps_query": "Cereal Crunch, Old Town, Bucharest", "lat": 44.41753, "lng": 26.03638}, {"name": "M60", "name_en": "M60 Bucharest", "cat": "breakfast", "alt": ["cafe"], "tag": "classic", "area": "Strada Maria Rosetti 60", "why": "בראנץ׳ ותיק ומדורג: ביצים מקורבלות עם כמהין, פנקייקים עם ריקוטה וטוסט אבוקדו. חלל מודרני עם חלונות גדולים.", "kids": "פנקייקים הם קלף מנצח לקטנים; לגדולים יש קפה טוב ואווירה שלא מרגישה 'של ילדים'. פתוח עד 23:00.", "ages": [6, 9, 13, 16], "tip": "פחות עמוס באמצע השבוע בבוקר.", "source": {"platform": "אתר", "url": "https://salutbucuresti.ro/en/guides/brunch/"}, "maps_query": "M60, Strada Maria Rosetti 60, Bucharest", "lat": 44.44224, "lng": 26.10766}, {"name": "פרודיסיאק — קערות ומיצים", "name_en": "Frudisiac", "cat": "breakfast", "alt": ["cafe"], "tag": "trend", "area": "Dorobanți", "why": "קערות אסאי, ביצים בנדיקט ומיצים סחוטים, בחלל מלא צמחים עם טרסה. פתוח 9:00-18:00.", "kids": "האופציה הבריאה של הטיול, אחרי כמה ימים של סרמלה ופפנאש. הקערות המתוקות עוברות טוב אצל הקטנים.", "ages": [6, 9, 13, 16], "tip": "סוגרים ב-18:00 — זה מקום של בוקר וצהריים בלבד.", "source": {"platform": "אתר", "url": "https://salutbucuresti.ro/en/guides/brunch/"}, "maps_query": "Frudisiac, Dorobanti, Bucharest", "lat": 44.46013, "lng": 26.0951}, {"name": "ג׳ואליה קרמריה", "name_en": "Gioelia Cremeria", "cat": "dessert", "tag": "classic", "area": "Strada Franceză, העיר העתיקה", "why": "גלידריה איטלקית ותיקה ומדורגת גבוה בלב העיר העתיקה, עם מבחר טעמים גדול וקינוחים.", "kids": "עצירת גלידה קלאסית באמצע סיבוב בעיר העתיקה — צעד מקרטורשטי ומ-Caru' cu Bere.", "ages": [6, 9, 13, 16], "tip": "ממוקם על אותו רחוב כמו כמה חנויות מזכרות — שלבו.", "source": {"platform": "אתר", "url": "https://www.tripadvisor.com/Restaurant_Review-g294458-d7804554-Reviews-Gioelia_Cremeria_Strada_Franceza-Bucharest.html"}, "maps_query": "Gioelia Cremeria, Strada Franceza, Bucharest", "lat": 44.43007, "lng": 26.09991}, {"name": "פרנץ׳ רבולושן — בר קינוחים", "name_en": "French Revolution Bucharest", "cat": "dessert", "tag": "both", "area": "מרכז", "why": "בר קינוחים שהתפרסם על פרופיטרול ואקלרים — אחד משמות הקינוח המוכרים בבוקרשט.", "kids": "מנה אחת מספיקה לשניים. מתאים כעצירה קצרה, לא כארוחה.", "ages": [6, 9, 13, 16], "tip": "מנות עשירות מאוד — אל תזמינו אחת לכל ילד.", "source": {"platform": "אתר", "url": "https://www.tripadvisor.co.uk/Restaurant_Review-g294458-d6968754-Reviews-French_Revolution-Bucharest.html"}, "maps_query": "French Revolution dessert, Bucharest", "lat": 44.44164, "lng": 26.09708}, {"name": "Art&Craft — קרמיקה של הורז ומתנות", "name_en": "Art&Craft Calea Victoriei", "cat": "souvenir", "tag": "classic", "area": "Calea Victoriei", "why": "חנות מתנות רומנית אמיתית: קרמיקה מהורז (מוכרת כמורשת אונסק\"ו), ממתקים מלאכת יד ובשמים בהשראת פולקלור.", "kids": "מקום טוב לתת לכל ילד תקציב ולתת לו לבחור מתנה שהיא לא מגנט. הקרמיקה שבירה — עטפו טוב.", "ages": [9, 13, 16], "tip": "על אותו רחוב כמו Grand Café — שלבו עם ארוחת בוקר.", "source": {"platform": "אתר", "url": "https://www.bucharest.ro/articles/where-to-find-unique-romanian-souvenirs-that-aren-t-cheesy-256"}, "maps_query": "Art&Craft shop, Calea Victoriei, Bucharest"}, {"name": "Romanian Boutique — חולצות רקומות", "name_en": "Romanian Boutique Baratiei", "cat": "souvenir", "tag": "classic", "area": "Strada Bărăției, העיר העתיקה", "why": "בוטיק שמוכר את החולצה הרקומה המסורתית (ie) ופריטים מקומיים נבחרים — מזכרת אמיתית ולא צעצוע.", "kids": "פחות מעניין לילדים; זו עצירה של ההורים. 15 דקות מספיקות.", "ages": [13, 16], "tip": "החולצות הרקומות ביד יקרות — יש גם גרסאות מודרניות זולות יותר.", "source": {"platform": "אתר", "url": "https://www.bucharest.ro/articles/where-to-find-unique-romanian-souvenirs-that-aren-t-cheesy-256"}, "maps_query": "Strada Baratiei, Bucharest", "lat": 44.43011, "lng": 26.10508}, {"name": "The Souvenir Shop — מוצרים מקומיים", "name_en": "The Souvenir Shop Strada Franceza", "cat": "souvenir", "tag": "trend", "area": "Strada Franceză, העיר העתיקה", "why": "חנות שמתמקדת במוצרים מקומיים וידידותיים לסביבה: חולצות בעיצוב אמנים, סבונים טבעיים ויינות רומניים נדירים.", "kids": "החולצות מעוצבות ולא קיטשיות — בני 13 ו-16 באמת ילבשו אותן בארץ.", "ages": [9, 13, 16], "tip": "היין הרומני הוא מתנה טובה להביא הביתה — בדקו את מגבלת הכניסה לישראל.", "source": {"platform": "אתר", "url": "https://www.bucharest.ro/articles/where-to-find-unique-romanian-souvenirs-that-aren-t-cheesy-256"}, "maps_query": "The Souvenir Shop, Strada Franceza, Bucharest", "lat": 44.43007, "lng": 26.09991}, {"name": "לייזר מגה-זון", "name_en": "Laser Megazone Bucharest", "cat": "indoor", "tag": "classic", "area": "בוקרשט", "why": "זירת לייזר-טאג מקורה, אחת הוותיקות בעיר — משחק קבוצתי שמתאים בדיוק לקבוצה של שישה.", "kids": "זה המשחק הנדיר שבו בן 6 ובן 16 באמת משחקים יחד באותה זירה. שני משחקים ברצף זה בערך שעה.", "ages": [9, 13, 16], "tip": "בדקו גיל/גובה מינימלי מראש לבן ה-6.", "source": {"platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d6514584-Reviews-Laser_Megazone-Bucharest.html"}, "maps_query": "Laser Megazone, Bucharest", "lat": 44.43366, "lng": 26.04991}, {"name": "האוס אוף באונס — טרמפולינות", "name_en": "House of Bounce Bucharest", "cat": "indoor", "tag": "classic", "area": "בוקרשט", "why": "פארק טרמפולינות מקורה — אחד המקומות המוכרים בעיר לשרוף אנרגיה של ילדים ביום גשום.", "kids": "בני 6 ו-9 יכולים לקפוץ שעתיים ברצף. בני 13 ו-16 ייהנו מהאזורים המתקדמים יותר.", "ages": [6, 9, 13, 16], "tip": "גרביים מיוחדות בדרך כלל חובה ונקנות במקום.", "source": {"platform": "אתר", "url": "https://www.tripadvisor.com/Attraction_Review-g294458-d7098647-Reviews-House_of_Bounce-Bucharest.html"}, "maps_query": "House of Bounce, Bucharest"}, {"name": "פארק הטבע קומאנה — דלתת ניאילוב", "name_en": "Comana Natural Park", "cat": "natpark", "alt": ["hike"], "tag": "classic", "area": "40 ק\"מ דרומית לעיר", "why": "שמורת הטבע המוגנת השנייה בגודלה ברומניה: ביצות דלתת הניאילוב, יערות אלון עתיקים, ציפורים נדירות, וסירות וקיאקים בין הקנים.", "kids": "שיט הסירה בין הקנים הוא מה שהילדים יזכרו. שבילי היער שטוחים ומתאימים גם לבן 6. מנזר קומאנה מ-1461, שנבנה בידי ולאד צפש, נמצא שם — קרס לסיפור דרקולה.", "ages": [6, 9, 13, 16], "tip": "45 דקות נסיעה. שלבו עם פארק ההרפתקאות קומאנה שנמצא באותו אזור ליום שלם.", "source": {"platform": "אתר", "url": "https://visitbucharest.today/day-trip-to-comana/"}, "maps_query": "Comana Natural Park, Romania", "lat": 44.12916, "lng": 26.39563}, {"name": "יער וצ׳רניקה — הליכה קלה על אגם", "name_en": "Cernica Forest and Monastery", "cat": "hike", "alt": ["natpark"], "tag": "classic", "area": "15 ק\"מ מזרחית לעיר", "why": "היער הקרוב ביותר לבוקרשט להליכה אמיתית: שבילים שטוחים בין עצים, אגם, ומנזר צ׳רניקה על חצי-אי בתוכו.", "kids": "הליכה של שעה שגם בן 6 עושה בלי בכי, עם אגם בסוף. אלטרנטיבה טובה ליום שכולו עיר.", "ages": [6, 9, 13, 16], "tip": "בערך 30 דקות ב-Bolt. קחו מים — אין הרבה חנויות בדרך.", "source": {"platform": "אתר", "url": "https://www.komoot.com/guide/3629052/easy-hikes-around-forest-cernica"}, "maps_query": "Cernica Monastery, Ilfov, Romania", "lat": 44.43494, "lng": 26.25825}], "summary": "ספטמבר בבוקרשט: מזג אוויר נעים לטרסות. הכי חם ברשת עדיין Grand Café de Bucarest בארמון מונטאורו, ו-Therme נשאר הסרטון הכי צפוי מהעיר. 14–20.9 מתקיים Bucharest Food Week עם תפריטים קבועים במאות מסעדות, וב-18.9 מופיע קרגו ב-Arenele Romane (יומיים לפני גארו באותו מקום). שימו לב: יום כיפור 2026 חל 20–21.9 — בדיוק באמצע הטיול — כדאי לתכנן מסביב לצום ולבדוק תפילות מול חב\"ד. ברובע היהודי: בית הכנסת הכוראלי, הגדול ומוזיאון היהדות במרחק הליכה מ-Unirii, ומסעדות ישראליות/כשרות בעיר.", "updated": "2026-09-10"}, "trip": null};</script>
+<script>
+(function(){
+document.documentElement.dir='rtl';
+const FAM=!!window.__EMBED; // family (public, no-login) build: data embedded, no AI
+const use=async n=>{ try{ return (window.claude&&claude.use)?await claude.use(n):null }catch(e){ return null } };
+const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
+const LS={get(k,d){try{const v=localStorage.getItem('tm.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('tm.'+k,JSON.stringify(v))}catch(e){}}};
+
+const state={
+  loc:LS.get('loc',{city:'בוקרשט',city_en:'Bucharest',country:'רומניה',lat:null,lng:null,area:''}), // {city,country,lat,lng,area}
+  who:'family', time:'any', wx:'clear',
+  fam:LS.get('fam','2 הורים ו-4 ילדים בגילאי 6, 9, 13 ו-16'),
+  pref:LS.get('pref',''), budget:LS.get('budget','mid'),
+  favs:LS.get('favs',[]), last:null
+};
+
+const FOOD=[
+  {id:'rest',ic:'🍽️',n:'מסעדות',sub:['מקומי','ישראלי','גורמה','סושי','מקסיקני','אמריקאי','שאוורמה','פיצה','צמחוני']},
+  {id:'dessert',ic:'🍨',n:'קינוחים'},
+  {id:'cafe',ic:'☕',n:'בתי קפה'},
+  {id:'market',ic:'🧺',n:'שווקי אוכל'},
+  {id:'breakfast',ic:'🥐',n:'ארוחת בוקר'},
+  {id:'kidsfood',ic:'🍔',n:'ידידותי לילדים'}
+];
+// הוסר 'theme' (פארקי שעשועים): אין בבוקרשט פארק שעשועים אמיתי — הכפתור הוביל למסך ריק.
+// פארק המים Divertiland נמצא תחת "מים ובריכות", ופארקי החבלים תחת "אקסטרים".
+const FUN=[
+  {id:'motor',ic:'🏎️',n:'מוטורי'},{id:'escape',ic:'🔐',n:'חדרי בריחה'},{id:'museum',ic:'🏛️',n:'מוזיאונים'},
+  {id:'luna',ic:'🎡',n:'לונה פארק'},{id:'extreme',ic:'🪂',n:'אקסטרים'},
+  {id:'water',ic:'🌊',n:'מים ובריכות'},{id:'indoor',ic:'🎳',n:'פעילות בפנים'},{id:'show',ic:'🎭',n:'הופעות ומופעים'}
+];
+const NATURE=[
+  {id:'natpark',ic:'🏞️',n:'פארקים לאומיים'},{id:'view',ic:'🌄',n:'תצפיות'},{id:'hike',ic:'🥾',n:'טיולים קלים'},
+  {id:'beach',ic:'🏖️',n:'חופים ואגמים'},{id:'citypark',ic:'🌳',n:'פארקים בעיר'},{id:'daytrip',ic:'🚗',n:'טיול יום'}
+];
+const SHOP=[
+  {id:'clothes',ic:'👕',n:'בגדים',sub:['נשים','גברים','נוער','ילדים']},
+  {id:'mall',ic:'🛍️',n:'קניונים ואאוטלט'},{id:'souvenir',ic:'🎁',n:'מזכרות ומתנות'},
+  {id:'hotel',ic:'🏨',n:'מלונות'},{id:'pharmacy',ic:'💊',n:'סופר ובית מרקחת'}
+];
+// הוסר 'souvenir2' (מתנות מקומיות): היה כפול מול 'מזכרות'. התוכן אוחד תחת 'מזכרות ומתנות'.
+const JEW=[
+  {id:'kosher',ic:'🇮🇱',n:'עסקים ישראליים וכשר'},{id:'jewish',ic:'✡️',n:'אתרי יהדות ומורשת'},{id:'shabbat',ic:'🕯️',n:'שבת ותפילה'}
+];
+const NAMES={}; [...FOOD,...FUN,...NATURE,...SHOP,...JEW].forEach(c=>NAMES[c.id]=c);
+
+function grid(el,items,onPick){
+  el.innerHTML='';
+  items.forEach(c=>{
+    const b=document.createElement('button');b.className='cat';b.dataset.id=c.id;
+    b.innerHTML=`<span class="ic">${c.ic}</span><span class="n">${c.n}</span>`;
+    b.onclick=()=>onPick(c,b);el.appendChild(b);
+  });
+}
+function closeSubs(){ $$('#view-home .sub').forEach(s=>{s.classList.add('hidden');s.innerHTML=''}); $$('.cat.on').forEach(x=>x.classList.remove('on')); }
+function showSub(subEl,c,btn,gridEl){
+  const wasOpen=btn.classList.contains('on')&&!subEl.classList.contains('hidden');
+  closeSubs();
+  if(!c.sub){return}
+  if(wasOpen){ run(c.id); return; } // second tap = all sub-types
+  btn.classList.add('on');
+  subEl.classList.remove('hidden');
+  subEl.innerHTML=`<div class="lbl">${c.n} — בחר סוג</div><div class="chips">${c.sub.map(s=>`<button class="pill" data-s="${s}">${s}</button>`).join('')}<button class="pill on" data-s="">הכל</button></div>`;
+  $$('button',subEl).forEach(p=>p.onclick=()=>run(c.id,p.dataset.s));
+  subEl.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+grid($('#foodGrid'),FOOD,(c,b)=>{c.sub?showSub($('#foodSub'),c,b,$('#foodGrid')):run(c.id)});
+grid($('#funGrid'),FUN,c=>run(c.id));
+grid($('#natureGrid'),NATURE,c=>run(c.id));
+grid($('#shopGrid'),SHOP,(c,b)=>{c.sub?showSub($('#shopSub'),c,b,$('#shopGrid')):run(c.id)});
+grid($('#jewGrid'),JEW,c=>run(c.id));
+
+// chips
+function chipGroup(sel,key,attr){ $$(sel+' .pill').forEach(b=>b.onclick=()=>{ $$(sel+' .pill').forEach(x=>x.classList.remove('on')); b.classList.add('on'); state[key]=b.dataset[attr]; if(key==='budget')LS.set('budget',state.budget); if(key==='who'){try{renderLive()}catch(e){}} }); }
+chipGroup('#whoChips','who','who'); chipGroup('#timeChips','time','time'); chipGroup('#wxChips','wx','wx'); chipGroup('#budgetChips','budget','b');
+$$('#budgetChips .pill').forEach(b=>b.classList.toggle('on',b.dataset.b===state.budget));
+$('#famInput').value=state.fam; $('#prefInput').value=state.pref;
+$('#saveSettings').onclick=()=>{state.fam=$('#famInput').value.trim()||state.fam;state.pref=$('#prefInput').value.trim();LS.set('fam',state.fam);LS.set('pref',state.pref);toast('נשמר');show('home')};
+$('#clearCache').onclick=()=>{try{Object.keys(localStorage).filter(k=>k.startsWith('tm.c.')).forEach(k=>localStorage.removeItem(k))}catch(e){}toast('נוקה')};
+
+// views
+function show(v){ ['home','results','favs','settings','trip','radar'].forEach(x=>$('#view-'+x).classList.toggle('hidden',x!==v)); $$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===(v==='trip'?'home':v))); window.scrollTo({top:0}); if(v==='favs')renderFavs(); if(v==='home')closeSubs(); if(v==='radar'){renderRadar();startRadarWatch();}else{stopRadarWatch();} }
+$$('nav button').forEach(b=>b.onclick=()=>{
+  // "המלצות" has nothing to show until something was picked. Instead of a dead-end toast that leaves
+  // the user stuck where they were, take them to the categories — that IS how recommendations start.
+  if(b.dataset.view==='results'&&!state.last){
+    show('home');
+    toast('בחרו קטגוריה ואציג המלצות');
+    const g=$('#foodGrid'); if(g)g.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  show(b.dataset.view);
+});
+$('#settingsBtn').onclick=()=>show('settings'); $('#backBtn').onclick=()=>show('home');
+
+function toast(t){ let e=$('#toast'); if(!e){e=document.createElement('div');e.id='toast';e.style.cssText='position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;z-index:9;transition:opacity .3s';document.body.appendChild(e)} e.textContent=t;e.style.opacity=1;clearTimeout(e._t);e._t=setTimeout(()=>e.style.opacity=0,1800); }
+
+// location
+function renderLoc(){ const l=state.loc; if(!l){$('#locName').textContent='לא נבחר מיקום';$('#locSub').textContent='שתף מיקום או הקלד עיר';return} $('#locName').textContent=(l.area?l.area+', ':'')+l.city+(l.country?', '+l.country:''); $('#locSub').textContent=l.lat!=null?`GPS · ${l.lat.toFixed(3)}, ${l.lng.toFixed(3)}`:'הוקלד ידנית'; }
+renderLoc();
+$('#cityGo').onclick=()=>setCity($('#cityInput').value.trim());
+$('#cityInput').addEventListener('keydown',e=>{if(e.key==='Enter')setCity(e.target.value.trim())});
+const AREAS=[['העיר העתיקה',44.4315,26.0995],['Unirii',44.4268,26.1025],['Universitate',44.4355,26.1015],['Piața Victoriei',44.4525,26.0865],['Herăstrău',44.4735,26.0800],['AFI Cotroceni',44.4308,26.0540],['Băneasa',44.5080,26.0860]];
+function setArea(name,lat,lng){ state.loc=Object.assign({},state.loc||{},{city:'בוקרשט',city_en:'Bucharest',country:'רומניה',area:name,lat,lng}); LS.set('loc',state.loc); renderLoc(); renderTransport(); try{renderLive()}catch(e){} renderAreas(); toast('המיקום: '+name); }
+function renderAreas(){ const l=state.loc; $('#areaChips').innerHTML='<span class="eyebrow" style="align-self:center">איפה אתם?</span>'+AREAS.map(([n,la,ln])=>`<button class="pill ${l&&l.area===n?'on':''}" data-a="${n}">${n}</button>`).join(''); $$('#areaChips .pill').forEach(b=>{const a=AREAS.find(x=>x[0]===b.dataset.a);b.onclick=()=>setArea(a[0],a[1],a[2])}); }
+renderAreas();
+function setCity(c){ if(!c)return; const m=c.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(m){ setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); $('#cityInput').value=''; return; } state.loc={city:c,country:'',lat:null,lng:null,area:''}; LS.set('loc',state.loc); renderLoc(); renderAreas(); toast('המיקום נקבע'); $('#cityInput').value=''; }
+function gpsFail(err){ const code=err&&err.code; const msg=code===1?'הדפדפן חסם גישה למיקום (בתוך אפליקציית Claude זה קורה לפעמים). פתח את הקישור בדפדפן הטלפון (Safari/Chrome) ואשר מיקום — או בחר אזור מהכפתורים למטה.':code===3?'המיקום לא הגיע בזמן — נסה שוב בחוץ, או בחר אזור.':'לא הצלחתי לקבל מיקום — בחר אזור מהכפתורים, או הדבק קואורדינטות מ-Google Maps.'; toast(msg); $('#locSub').textContent=msg; $('#areaChips').scrollIntoView({behavior:'smooth',block:'center'}); }
+$('#gpsBtn').onclick=()=>{
+  if(!navigator.geolocation){gpsFail({code:0});return}
+  $('#gpsBtn').disabled=true;$('#gpsBtn').textContent='מאתר…';
+  navigator.geolocation.getCurrentPosition(async p=>{
+    const {latitude:lat,longitude:lng}=p.coords;
+    if(FAM){ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat,lng}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); $('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום'; toast('המיקום עודכן'); return; }
+    state.loc={city:'',country:'',lat,lng,area:''};renderLoc();$('#locName').textContent='מזהה עיר…';
+    try{
+      const r=await ai.json(`Given GPS coordinates lat=${lat}, lng=${lng}, identify the location. Return JSON only: {"city":"<city name in Hebrew>","city_en":"<city name in English>","country":"<country in Hebrew>","area":"<neighborhood or district in Hebrew, or empty string>"}`,{modelTier:'quick'});
+      state.loc={city:r.city||r.city_en||'',city_en:r.city_en||'',country:r.country||'',area:r.area||'',lat,lng};
+    }catch(e){ state.loc.city='מיקום נוכחי'; }
+    LS.set('loc',state.loc);renderLoc();renderTransport();try{renderLive()}catch(e){}$('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום';
+  },err=>{ $('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום'; gpsFail(err); },{enableHighAccuracy:false,timeout:12000,maximumAge:120000});
+};
+
+// transport
+function renderTransport(){
+  const l=state.loc; const q=l?encodeURIComponent((l.city_en||l.city||'')+(l.country?', '+l.country:'')):'';
+  const ll=l&&l.lat!=null?`${l.lat},${l.lng}`:'';
+  $('#transport').innerHTML=[
+    ['Bolt','הכי נפוץ וזול ברומניה — פותח את האפליקציה','bolt://','https://bolt.eu/en/'],
+    ['Uber','פותח את האפליקציה (אם מותקנת)','uber://?action=setPickup&pickup=my_location','https://m.uber.com/ul/?action=setPickup&pickup=my_location'],
+    ['תחבורה ציבורית','מסלול ב-Google Maps','',ll?`https://www.google.com/maps/dir/?api=1&origin=${ll}&travelmode=transit`:'https://www.google.com/maps/?travelmode=transit'],
+    ['מלונות','חיפוש ב-Booking','',`https://www.booking.com/searchresults.html?ss=${q}&group_adults=2&group_children=4&age=6&age=9&age=13&age=16&no_rooms=2`]
+  ].map(([t,s,app,web])=>`<a href="${web}" target="_blank" rel="noopener" ${app?`data-app="${app}"`:''}><span class="t">${t}</span><span class="s">${s}</span></a>`).join('');
+  $$('#transport a[data-app]').forEach(a=>a.onclick=e=>{ // try the native app first, fall back to the website
+    const app=a.dataset.app, web=a.href; e.preventDefault();
+    const t0=Date.now(); const fallback=setTimeout(()=>{ if(Date.now()-t0<2500&&!document.hidden) window.open(web,'_blank','noopener'); },1200);
+    document.addEventListener('visibilitychange',()=>{ if(document.hidden)clearTimeout(fallback) },{once:true});
+    window.location.href=app;
+  });
+}
+renderTransport();
+
+// ===== DISTANCE =====
+function km(a,b,c,d){ const R=6371,dl=(c-a)*Math.PI/180,dn=(d-b)*Math.PI/180,x=Math.sin(dl/2)**2+Math.cos(a*Math.PI/180)*Math.cos(c*Math.PI/180)*Math.sin(dn/2)**2; return 2*R*Math.asin(Math.sqrt(x)); }
+function distTo(it){ const l=state.loc; if(!l||l.lat==null||it.lat==null||it.lng==null)return null; return km(l.lat,l.lng,it.lat,it.lng); }
+function distLabel(it){ const d=distTo(it); if(d==null)return ''; if(d<0.15)return 'כאן ממש'; if(d<2.5)return Math.max(2,Math.round(d/0.075))+' דק׳ הליכה'; if(d<30)return Math.round(d*10)/10+' ק״מ · ~'+Math.max(5,Math.round(d/0.4))+' דק׳ נסיעה'; return Math.round(d)+' ק״מ'; }
+function withDist(items){ return items.map(it=>Object.assign({},it,{_d:distTo(it)})).sort((a,b)=>(a._d==null?1e9:a._d)-(b._d==null?1e9:b._d)); }
+let dbNs=null, dbReady=(async()=>{ dbNs=FAM?null:await use('db'); return dbNs; })();
+
+// ===== LIVE TRENDS (db, refreshed daily by Claude) =====
+state.live=FAM?(window.__EMBED.live||null):LS.get('live',null);
+function unwrap(snap){ if(!snap)return null; if(typeof snap.data==='function')return snap.data(); if(snap.data&&typeof snap.data==='object'&&snap.data.items)return snap.data; return snap.items?snap:null; }
+function srcBtn(s){ if(!s||!s.url||!/^https?:\/\//i.test(s.url))return ''; const p=(s.platform||'').toLowerCase(); const cls=p.includes('tiktok')?'tiktok':p.includes('insta')?'instagram':p.includes('youtube')?'youtube':'web'; const ic=cls==='tiktok'?'▶':cls==='instagram'?'◎':cls==='youtube'?'▶':'↗'; return `<a class="src ${cls}" href="${esc(s.url)}" target="_blank" rel="noopener">${ic} ${esc(s.platform||'מקור')}${s.by?' · '+esc(s.by):''}</a>`; }
+const KIDS=[6,9,13,16];
+function whoAges(){ return {family:KIDS,teens:[13,16],little:[6,9],adults:[]}[state.who]||KIDS; }
+function fitsWho(it){ const need=whoAges(); if(!need.length||!Array.isArray(it.ages)||!it.ages.length)return true; return need.some(a=>it.ages.includes(a)); }
+function agesHtml(it){ if(!Array.isArray(it.ages)||!it.ages.length)return ''; return `<span class="ages">${KIDS.map(a=>`<span class="${it.ages.includes(a)?'':'no'}" title="${it.ages.includes(a)?'מתאים':'פחות מתאים'} לבן ${a}">${a}</span>`).join('')}<span class="lbl">גילאים</span></span>`; }
+function liveMatches(cat,sub){ const L=state.live; if(!L||!L.items)return []; let r; if(cat==='hot')r=L.items.filter(i=>i.tag!=='classic').slice(0,10); else r=L.items.filter(it=>(it.cat===cat||(it.alt||[]).includes(cat))&&(!sub||!it.sub||it.sub===sub)); r=r.filter(fitsWho); return state.loc&&state.loc.lat!=null?withDist(r):r; }
+function isLiveCity(){ const l=state.loc,L=state.live; if(!l||!L)return false; const a=((l.city_en||l.city||'')+'').toLowerCase(), b=(L.city||'').toLowerCase(), c=(L.city_he||''); return a&&(b.includes(a)||a.includes(b)||a===c||l.city===c); }
+function renderLive(){
+  const L=state.live, sec=$('#liveSection'); if(!L||!L.items||!L.items.length){sec.classList.add('hidden');return}
+  sec.classList.remove('hidden'); $('#liveStamp').textContent=`${L.city_he||L.city} · עודכן ${L.updated||''}`; $('#liveSummary').textContent=L.summary||'';
+  const sc=$('#liveScroll'); sc.innerHTML='';
+  L.items.filter(i=>i.tag!=='classic').filter(fitsWho).slice(0,10).forEach(it=>{
+    const m=document.createElement('div');m.className='mini';
+    m.innerHTML=`<div class="card-top"><h3>${esc(it.name)}</h3><span class="tag ${it.tag==='both'?'both':'trend'}">${it.tag==='both'?'טרנד + קלאסיקה':'טרנד'}</span></div><div class="meta">${distLabel(it)?`<span class="dist">📍 ${distLabel(it)}</span>`:''}${agesHtml(it)}</div><div class="why">${esc(it.why||'')}</div><div class="card-actions">${srcBtn(it.source)}<a href="${mapsUrl(it.maps_query||it.name_en)}" target="_blank" rel="noopener">🗺️</a><button class="fav ${isFav(it)?'on':''}">${isFav(it)?'♥':'♡'}</button></div>`;
+    $('.fav',m).onclick=e=>{toggleFav(it,e.currentTarget);e.currentTarget.textContent=isFav(it)?'♥':'♡'};
+    sc.appendChild(m);
+  });
+}
+renderLive();
+$('#liveAll').onclick=()=>run('live');
+(async()=>{
+  try{
+    const db=await dbReady; if(!db)return;
+    const snap=await db.doc('trends/current').get(); const d=unwrap(snap);
+    if(d&&d.items){ state.live=d; LS.set('live',d); renderLive(); }
+  }catch(e){ console.warn('live trends unavailable',e); }
+  try{
+    const db=await dbReady; if(!db)return;
+    const snap=await db.doc('plan/current').get(); const p=unwrapPlan(snap);
+    if(p&&p.days){ state.trip=p; LS.set('trip',p); updateTripSub(); if(!$('#view-trip').classList.contains('hidden'))renderTrip(); }
+  }catch(e){ console.warn('plan unavailable',e); }
+})();
+
+// ===== NEAR ME =====
+function needGps(cb){
+  if(state.loc&&state.loc.lat!=null){cb();return}
+  if(!navigator.geolocation){toast('אין GPS בדפדפן');return}
+  toast('מאתר מיקום…');
+  navigator.geolocation.getCurrentPosition(p=>{ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); cb(); },err=>{ show('home'); gpsFail(err); },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+}
+$('#nearBtn').onclick=()=>needGps(()=>run('near'));
+
+// ===== AI =====
+let sampleNs=null, sampleReady=(async()=>{ sampleNs=FAM?null:await use('sample'); return sampleNs; })();
+const ai={
+  async json(prompt,opts={}){ const s=await sampleReady; if(!s)throw {code:'not_granted',message:'AI לא זמין בתצוגה הזו'}; return s.json(prompt,Object.assign({modelTier:'default'},opts)); }
+};
+
+function ctxText(){
+  const l=state.loc; const who={family:'כל המשפחה: '+state.fam,teens:'רק ההורים והנוער (13–16)',little:'ההורים והילדים הקטנים (6–9)',adults:'ההורים בלבד, בלי ילדים'}[state.who];
+  const time={any:'',morning:'בוקר',afternoon:'צהריים',evening:'ערב'}[state.time];
+  const wx={clear:'מזג אוויר יבש',rain:'גשום — העדף פעילויות מקורות',hot:'חם מאוד — העדף צל, מים ומיזוג'}[state.wx];
+  const budget={low:'תקציב חסכוני',mid:'תקציב בינוני',high:'תקציב גבוה, מוכנים לפנק'}[state.budget];
+  return {who,time,wx,budget,loc:l};
+}
+function locStr(display){ const l=state.loc; if(!l)return ''; let s=(display?(l.city||l.city_en):(l.city_en||l.city))+(l.country?', '+l.country:''); if(l.area)s=l.area+', '+s; if(!display&&l.lat!=null)s+=` (GPS ${l.lat.toFixed(4)}, ${l.lng.toFixed(4)})`; return s; }
+function hash(s){ let h=0; for(const ch of String(s||''))h=(h*31+ch.charCodeAt(0))|0; return (h>>>0).toString(36); }
+function cacheKey(cat,sub){ const l=state.loc; return 'c.'+[l.city_en||l.city,cat,sub||'',state.who,state.time,state.wx,state.budget,hash(state.pref+'|'+state.fam),hash(state.refine||'')].join('|'); }
+// ===== REFINE (free-text search inside a category) =====
+state.refine='';
+const REFINE_CHIPS={show:['רוק / פופ','קונצרט','סטנד-אפ','קרקס','מחזמר / ילדים','הערב'],rest:['בחוץ','עם נוף','זול','לילדים בררנים','בלי בשר'],dessert:['גלידה','שוקולד','ללא סוכר'],museum:['אינטראקטיבי','מדע','אמנות','קצר'],extreme:['גובה','מים','נהיגה'],daytrip:['טירות','טבע','עד שעה נסיעה'],default:['הכי קרוב','זול','הערב','מקורה','לגדולים']};
+function refineFor(cat){ return REFINE_CHIPS[cat]||REFINE_CHIPS.default; }
+function renderRefine(cat,sub){
+  const box=$('#refineBox'); if(['near','live','plan','hot'].includes(cat)){box.classList.add('hidden');return}
+  box.classList.remove('hidden'); $('#refineInput').value=state.refine||'';
+  $('#refineChips').innerHTML=refineFor(cat).map(t=>`<button class="pill ${state.refine===t?'on':''}" data-r="${esc(t)}">${esc(t)}</button>`).join('')+(state.refine?'<button class="pill" data-r="">✕ נקה</button>':'');
+  $$('#refineChips .pill').forEach(b=>b.onclick=()=>{state.refine=b.dataset.r;run(cat,sub)});
+}
+$('#refineGo').onclick=()=>{ if(!state.last)return; state.refine=$('#refineInput').value.trim(); run(state.last.cat,state.last.sub); };
+$('#refineInput').addEventListener('keydown',e=>{ if(e.key==='Enter')$('#refineGo').click(); });
+function heNorm(s){ return String(s||'').toLowerCase().replace(/ם/g,'מ').replace(/ן/g,'נ').replace(/ץ/g,'צ').replace(/ף/g,'פ').replace(/ך/g,'כ'); }
+function refineMatch(it){ const r=heNorm(state.refine); if(!r)return true; const words=r.split(/[\s\/,]+/).filter(Boolean); const hay=heNorm([it.name,it.name_en,it.why,it.kids,it.area,it.sub,it.tip].join(' ')); const stems=w=>{const s=new Set([w]); for(const suf of ['ימ','ות','יות','ה','י','ת','נ']){ if(w.endsWith(suf)&&w.length-suf.length>=2)s.add(w.slice(0,-suf.length)); } if(w.startsWith('ה')&&w.length>3)s.add(w.slice(1)); return [...s]}; return words.some(w=>stems(w).some(s=>hay.includes(s))); }
+function refineLinks(cat){ const q=encodeURIComponent((state.refine||'')+' '+(NAMES[cat]?NAMES[cat].n:'')+' Bucharest'); const links=[['🔎 Google',`https://www.google.com/search?q=${q}`],['🗺️ מפות',`https://www.google.com/maps/search/?api=1&query=${q}`]]; if(cat==='show')links.push(['🎟️ iaBilet (כרטיסים)','https://www.iabilet.ro/bilete-in-bucuresti/'],['🎸 Songkick','https://www.songkick.com/metro-areas/29335-romania-bucharest']); return `<div class="card"><h3>לא מצאתי "${esc(state.refine)}" ברשימה מהרשת</h3><div class="why">חפש ישירות:</div><div class="card-actions">${links.map(([t,h])=>`<a class="src web" href="${h}" target="_blank" rel="noopener">${t}</a>`).join('')}</div></div>`; }
+function validData(cat,d){ if(!d||typeof d!=='object')return false; if(cat==='plan')return Array.isArray(d.stops); return Array.isArray(d.items); }
+
+function ageRules(){return `חוקי גילאים (חשוב!): במשפחה 4 ילדים בני 6, 9, 13 ו-16. לכל פריט החזר "ages" — מערך של הגילאים מתוך [6,9,13,16] שהמקום באמת מתאים להם. בן 6: קצר, ויזואלי, בלי הליכות ארוכות, בלי מגבלות גובה מעל 120 ס"מ. בן 9: אקשן, אינטראקטיבי, סבלנות של שעה. בן 13: מגניב, לא "לילדים קטנים", תמונות לרשתות. בן 16: כמו מבוגר — אקסטרים, אוכל טוב, לילה, לא רוצה "פארק ילדים". אל תגיש רשימה שכולה לקטנים: וודא שלפחות 3 מהפריטים מתאימים לבני 13-16 ולפחות 3 לבני 6-9, ואם ${state.who==='teens'?'מבקשים רק לגדולים — כל הפריטים לבני 13-16':state.who==='little'?'מבקשים רק לקטנים — כל הפריטים לבני 6-9':state.who==='adults'?'ההורים לבד — התאם למבוגרים והשאר ages ריק':'כל המשפחה — העדף מקומות שעובדים לכולם יחד'}.`;}
+function catPrompt(cat,sub){
+  const c=ctxText(); const name=NAMES[cat]?NAMES[cat].n:cat;
+  const catHint={
+    rest:'מסעדות'+(sub?' מסוג '+sub:''), dessert:'קינוחים, גלידריות, קונדיטוריות', cafe:'בתי קפה', market:'שווקי אוכל ודוכני רחוב', breakfast:'ארוחות בוקר ובראנץ׳', kidsfood:'מסעדות שנוח בהן עם ילדים (מהיר, מנות ילדים, לא מחמיר)',
+    motor:'קארטינג, סימולטורים, מסלולי מירוץ, ATV, חוויות נהיגה', escape:'חדרי בריחה (ציין מגבלות גיל ושפה)', museum:'מוזיאונים — כולל מוזיאוני מדע ואינטראקטיביים שמתאימים לילדים', luna:'לונה פארקים, ירידים, פארקי משחקים', extreme:'אקסטרים: זיפליין, באנג׳י, רפטינג, טיפוס, קייקים, פארקי חבלים (ציין גיל מינימום)', water:'פארקי מים, בריכות, ספא משפחתי', indoor:'פעילות מקורה: באולינג, טרמפולינות, VR, לייזר טאג, אקווריום', show:'מופעים, הופעות, תיאטרון, קרקס שמתאימים למשפחות',
+    natpark:'פארקים לאומיים ושמורות טבע בסביבה', view:'נקודות תצפית, מגדלים, רכבלים, גגות', hike:'טיולים רגליים קלים שמתאימים לילדים', beach:'חופים, אגמים, נהרות לשחייה', citypark:'פארקים עירוניים וגני שעשועים גדולים', daytrip:'טיולי יום מחוץ לעיר (עד שעתיים נסיעה)',
+    clothes:'חנויות בגדים'+(sub?' ל'+sub:'')+' — רשתות מוכרות וחנויות מקומיות שוות, ואזורי קניות', mall:'קניונים ואאוטלטים', souvenir:'מזכרות, שווקי פשפשים, שווקים מקומיים', hotel:'מלונות ודירות נופש שמתאימים למשפחה של 6 (חדרים משפחתיים, מיקום מרכזי)', pharmacy:'סופרמרקטים ובתי מרקחת קרובים ומוכרים', kosher:'עסקים בבעלות ישראלית ומסעדות כשרות: מסעדות ישראליות, חומוס, שף ישראלי, מכולת כשרה, ספקי סעודות שבת. ציין אם כשר למהדרין או רק ישראלי', jewish:'אתרי יהדות ומורשת: בתי כנסת היסטוריים, מוזיאון יהודי, אנדרטאות שואה, הרובע היהודי הישן, בית קברות יהודי, תיאטרון יידיש, סיורי מורשת. ציין שעות פתיחה ודרישות ביטחון', shabbat:'תפילות ושבת: בתי כנסת פעילים עם מניין (אשכנזי/ספרדי/חב"ד), סעודות שבת בהזמנה, זמני כניסת ויציאת שבת בבוקרשט לתאריכים 18-19.9.2026, מקווה, מה במרחק הליכה'
+  }[cat]||name;
+  return `אתה מדריך טיולים מומחה למשפחות. המיקום: ${locStr()}.
+המשפחה: ${c.who}. ${c.time?'שעה: '+c.time+'. ':''}${c.wx}. ${c.budget}.${state.pref?' העדפות/מגבלות: '+state.pref+'.':''}
+הקטגוריה: ${catHint}.
+${state.refine?`בקשה ספציפית של המשתמש: "${state.refine}" — כל ההמלצות חייבות להתאים לבקשה הזו (למשל אם ביקש רוק — רק הופעות/מקומות של רוק ופופ, לא תיאטרון). אם יש אירועים בתאריכים 16–22.9.2026 שאתה יודע עליהם בוודאות — ציין אותם; אם לא, תן את המקומות/האולמות הרלוונטיים וציין לבדוק את הלו"ז ב-iabilet.ro.`:''}
+
+תן 8 המלצות של מקומות אמיתיים, מוכרים ומדורגים גבוה בסביבת המיקום (קודם קרובים, אחר כך שווה נסיעה). שלב בין "טרנדי" (פופולרי לאחרונה, מדובר ברשתות, חדש יחסית) לבין "קלאסיקה" (ותיק, מוכר, ביקורות גבוהות לאורך שנים). אל תמציא מקומות — אם אינך בטוח שמקום קיים, אל תכלול אותו. אם אינך בטוח בדירוג, השאר null.
+${ageRules()}
+החזר JSON בלבד בפורמט:
+{"summary":"משפט אחד-שניים בעברית: מה מאפיין את הסצנה הזו באזור ומה הכי שווה",
+ "items":[{"name":"שם בעברית או תעתיק","name_en":"שם רשמי באנגלית/מקומית לחיפוש במפות","tag":"trend|classic|both","rating":4.6,"price":"€€","area":"שכונה/אזור","distance":"למשל 10 דק׳ הליכה / 20 דק׳ נסיעה","why":"למה שווה, 1–2 משפטים בעברית","kids":"בפירוט לפי ילד: מה יעניין את בן ה-6, בן ה-9, בן ה-13 ובן ה-16, גיל מינימום/גובה, כמה זמן מחזיק אותם","ages":[6,9,13,16],"tip":"טיפ מעשי: הזמנה מראש, שעה מומלצת, מה להזמין","maps_query":"מחרוזת לחיפוש ב-Google Maps: שם + עיר"}]}`;
+}
+
+function planPrompt(){
+  const c=ctxText(); const d=new Date(); const day=['ראשון','שני','שלישי','רביעי','חמישי','שישי','שבת'][d.getDay()];
+  return `אתה מדריך טיולים מומחה למשפחות. המיקום: ${locStr()}. היום יום ${day}.
+המשפחה: ${c.who}. ${c.wx}. ${c.budget}.${state.pref?' העדפות/מגבלות: '+state.pref+'.':''}
+תכנן יום מלא (09:00–22:00) עם 6–7 תחנות: אטרקציה בוקר, ארוחת צהריים, אטרקציה אחה"צ, הפסקת קינוח/מנוחה, תצפית או פארק לקראת ערב, ארוחת ערב. כל התחנות מקומות אמיתיים ומוכרים, מסודרים גיאוגרפית כדי למזער נסיעות. חשוב על עייפות של ילד בן 6 ועל שעמום של בן 16 — כל יום חייב תחנה אחת שהיא "של הגדולים" (13-16) ואחת "של הקטנים" (6-9), והשאר לכולם.
+${ageRules()}
+החזר JSON בלבד:
+{"title":"שם ליום בעברית","summary":"2 משפטים על הרעיון של היום","stops":[{"time":"09:30","name":"שם","name_en":"שם לחיפוש במפות","type":"אטרקציה/אוכל/טבע","duration":"שעה וחצי","why":"למה זה כאן, משפט","kids":"לפי ילד: 6 / 9 / 13 / 16","ages":[6,9,13,16],"maps_query":"שם + עיר"}],"tips":["3 טיפים מעשיים ליום הזה"]}`;
+}
+
+function hotPrompt(){
+  const c=ctxText();
+  return `אתה מדריך טיולים מומחה למשפחות. המיקום: ${locStr()}. המשפחה: ${c.who}. ${c.wx}. ${c.budget}.${state.pref?' העדפות: '+state.pref+'.':''}
+מה חם באזור עכשיו? תן 10 המלצות מעורבות (אוכל, אטרקציות, מקומות) — חצי "טרנד": מקומות שהפכו פופולריים לאחרונה ומדוברים ברשתות, וחצי "קלאסיקה": הדברים הכי מוכרים ומדורגים שאסור לפספס. רק מקומות אמיתיים. אל תמציא.
+${ageRules()}
+החזר JSON בלבד: {"summary":"2 משפטים על האווירה והעונה באזור","items":[{"name":"","name_en":"","tag":"trend|classic|both","rating":4.5,"price":"€€","area":"","distance":"","why":"","kids":"לפי ילד: 6 / 9 / 13 / 16","ages":[6,9,13,16],"tip":"","maps_query":""}]}`;
+}
+
+// ===== run =====
+async function run(cat,sub){
+  if(!state.last||state.last.cat!==cat||(state.last.sub||'')!==(sub||''))state.refine='';
+  if(cat==='near'){
+    state.last={cat}; $('#resTitle').textContent='📍 קרוב אליי'; const L=state.live||{items:[]};
+    const items=withDist(L.items.filter(i=>i.lat!=null).filter(fitsWho));
+    $('#resCtx').textContent=`מהמיקום הנוכחי · ${items.length} מקומות מהרשת · ממוין לפי מרחק`;
+    show('results'); const body=$('#resBody'); body.innerHTML='';
+    const wrap=document.createElement('div');wrap.className='results';
+    if(!items.length)wrap.innerHTML='<div class="empty">אין עדיין מקומות עם מיקום.</div>';
+    items.forEach(it=>wrap.appendChild(card(it,true))); body.appendChild(wrap); return;
+  }
+  if(cat==='live'){
+    state.last={cat}; $('#resTitle').textContent='📲 מהרשת עכשיו'; const L=state.live||{};
+    $('#resCtx').textContent=`${L.city_he||L.city||''} · עודכן ${L.updated||''} · ${(L.items||[]).length} מקומות עם סרטון/מקור`;
+    show('results'); const body=$('#resBody'); body.innerHTML='';
+    const wrap=document.createElement('div');wrap.className='results';
+    if(L.summary){const s=document.createElement('div');s.className='summary';s.textContent=L.summary;wrap.appendChild(s)}
+    (L.items||[]).filter(fitsWho).forEach(it=>wrap.appendChild(card(it,true))); body.appendChild(wrap); return;
+  }
+  if(FAM){
+    state.last={cat,sub}; const c0=NAMES[cat]; $('#resTitle').textContent=c0?(c0.ic+' '+c0.n+(sub?' · '+sub:'')):cat;
+    const items=liveMatches(cat,sub).filter(refineMatch); $('#resCtx').textContent=`מהרשת · ${items.length} מקומות${state.refine?' · "'+state.refine+'"':''}${state.loc&&state.loc.lat!=null?' · ממוין לפי מרחק':''}`;
+    show('results'); renderRefine(cat,sub); const body=$('#resBody'); body.innerHTML=''; const wrap=document.createElement('div');wrap.className='results';
+    if(!items.length){ if(state.refine){ wrap.innerHTML=refineLinks(cat); } else { const q=encodeURIComponent((c0?c0.n:cat)+' '+(sub||'')+' Bucharest'); wrap.innerHTML=`<div class="empty">אין עדיין טרנדים בקטגוריה הזו.<br><br><a class="src web" href="https://www.google.com/maps/search/?api=1&query=${q}" target="_blank" rel="noopener">🗺️ חפש ב-Google Maps</a></div>`; } }
+    items.forEach(it=>wrap.appendChild(card(it,true))); body.appendChild(wrap); return;
+  }
+  if(!state.loc){toast('קודם שתף מיקום או הקלד עיר');$('#cityInput').focus();return}
+  const title=cat==='hot'?'🔥 מה חם עכשיו':cat==='plan'?'🗓️ תכנון יום':(NAMES[cat].ic+' '+NAMES[cat].n+(sub?' · '+sub:''));
+  const req={cat,sub}; state.last=req; $('#resTitle').textContent=title;
+  const c=ctxText(); $('#resCtx').textContent=`${locStr(true)} · ${c.who.split(':')[0]}${c.time?' · '+c.time:''} · ${c.wx.split(' —')[0]} · ${c.budget}${state.refine?' · "'+state.refine+'"':''}`;
+  show('results'); renderRefine(cat,sub);
+  const body=$('#resBody'); const key=cacheKey(cat,sub);
+  const cached=LS.get(key,null);
+  if(cached&&Date.now()-cached.t<36e5*24&&validData(cat,cached.d)){ try{ render(cat,cached.d); return; }catch(e){ try{localStorage.removeItem('tm.'+key)}catch(_){} } }
+  body.innerHTML=`<div class="loading"><div class="spin"></div><div>${cat==='plan'?'בונה מסלול ליום…':'מחפש את הכי טוב באזור…'}</div><div style="font-size:13px;color:var(--muted)">בפעם הראשונה הדפדפן יבקש אישור לשימוש ב-AI</div></div>`;
+  try{
+    const prompt=cat==='hot'?hotPrompt():cat==='plan'?planPrompt():catPrompt(cat,sub);
+    const d=await ai.json(prompt,{modelTier:cat==='plan'?'complex':'default'});
+    if(state.last!==req)return; // user moved on — drop stale response
+    if(!validData(cat,d))throw {message:'ה-AI החזיר תשובה לא תקינה. נסה "רענן".'};
+    LS.set(key,{t:Date.now(),d}); render(cat,d);
+  }catch(e){
+    if(state.last!==req)return;
+    const msg=e&&e.code==='not_granted'?'ה-AI לא זמין בתצוגה הזו. פתח את הדף מתוך אפליקציית Claude (או Claude.ai) כשאתה מחובר.':e&&e.code==='rate_limited'?'יותר מדי בקשות — נסה שוב בעוד דקה.':'משהו השתבש: '+(e&&e.message||e);
+    body.innerHTML=`<div class="notice err">${msg}</div>`;
+  }
+}
+$('#hotBtn').onclick=()=>run('hot'); $('#planBtn').onclick=()=>run('plan');
+$('#refreshBtn').onclick=async()=>{ if(!state.last)return; const {cat,sub}=state.last;
+  if(cat==='live'||cat==='near'){ try{ const db=await dbReady; if(db){ const d=unwrap(await db.doc('trends/current').get()); if(d&&d.items){state.live=d;LS.set('live',d);renderLive();toast('הטרנדים עודכנו')} } }catch(e){} run(cat,sub); return; }
+  try{localStorage.removeItem('tm.'+cacheKey(cat,sub))}catch(e){} run(cat,sub); };
+
+function mapsUrl(q){ return 'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q||''); }
+function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[ch])); }
+function favId(it){ return (it.name_en||it.name||'').toLowerCase().trim(); }
+function isFav(it){ return state.favs.some(f=>favId(f)===favId(it)); }
+function toggleFav(it,btn){ const id=favId(it); if(isFav(it)){state.favs=state.favs.filter(f=>favId(f)!==id);btn.classList.remove('on');btn.textContent='♡ שמור'} else {state.favs.unshift(Object.assign({city:state.loc&&(state.loc.city_en||state.loc.city)},it));btn.classList.add('on');btn.textContent='♥ נשמר'} LS.set('favs',state.favs); if(!$('#view-favs').classList.contains('hidden'))renderFavs(); }
+
+function card(it,live){
+  const el=document.createElement('article');el.className='card'+(live||it.source?' live':'');
+  const tag=it.tag==='trend'?'<span class="tag trend">טרנד</span>':it.tag==='both'?'<span class="tag both">טרנד + קלאסיקה</span>':'<span class="tag classic">קלאסיקה</span>';
+  el.innerHTML=`<div class="card-top"><h3>${esc(it.name)}<div class="en">${esc(it.name_en||'')}</div></h3>${tag}</div>
+  <div class="meta">${distLabel(it)?`<span class="dist">📍 ${distLabel(it)}</span>`:''}${it.rating?`<span>★ <b>${esc(it.rating)}</b></span>`:''}${it.price?`<span>${esc(it.price)}</span>`:''}${it.area?`<span>${esc(it.area)}</span>`:''}${it.distance?`<span>${esc(it.distance)}</span>`:''}${it.city?`<span>${esc(it.city)}</span>`:''}${agesHtml(it)}</div>
+  <div class="why">${esc(it.why||'')}</div>
+  ${it.kids?`<div class="kids"><b>עם הילדים:</b> ${esc(it.kids)}</div>`:''}
+  ${it.tip?`<div class="why" style="font-size:14px;color:var(--ink2)">💡 ${esc(it.tip)}</div>`:''}
+  <div class="card-actions">${srcBtn(it.source)}${srcBtn(it.source2)}<a href="${mapsUrl(it.maps_query||it.name_en||it.name)}" target="_blank" rel="noopener">🗺️ מפות</a><a href="https://www.google.com/search?q=${encodeURIComponent((it.name_en||it.name)+' reviews')}" target="_blank" rel="noopener">🔎 ביקורות</a><button class="fav ${isFav(it)?'on':''}">${isFav(it)?'♥ נשמר':'♡ שמור'}</button></div>`;
+  $('.fav',el).onclick=e=>toggleFav(it,e.currentTarget);
+  return el;
+}
+function render(cat,d){
+  const body=$('#resBody'); body.innerHTML='';
+  if(cat==='plan'){
+    body.innerHTML=`<div class="summary"><b>${esc(d.title||'')}</b><br>${esc(d.summary||'')}</div><div style="height:12px"></div>`;
+    (d.stops||[]).forEach(s=>{
+      const w=document.createElement('div');w.className='stop';
+      const c=card({name:s.name,name_en:s.name_en,tag:'classic',area:s.type,distance:s.duration,why:s.why,kids:s.kids,maps_query:s.maps_query});
+      $('.tag',c).remove();
+      w.innerHTML=`<div class="time">${esc(s.time||'')}</div>`;w.appendChild(c);body.appendChild(w);
+    });
+    if(d.tips&&d.tips.length){const t=document.createElement('div');t.className='notice';t.style.marginTop='14px';t.innerHTML='<b>טיפים ליום:</b><br>'+d.tips.map(esc).join('<br>');body.appendChild(t)}
+    return;
+  }
+  const wrap=document.createElement('div');wrap.className='results';
+  const live=isLiveCity()?liveMatches(cat,state.last&&state.last.sub).filter(refineMatch):[];
+  if(live.length){
+    const h=document.createElement('div');h.className='live-head';h.innerHTML=`<span class="eyebrow">📲 מהרשת · עם סרטון</span><span class="stamp">${esc(state.live.updated||'')}</span>`;wrap.appendChild(h);
+    live.forEach(it=>wrap.appendChild(card(it,true)));
+    const h2=document.createElement('div');h2.className='live-head';h2.innerHTML='<span class="eyebrow">✨ המלצות AI</span>';wrap.appendChild(h2);
+  }
+  if(d.summary){const s=document.createElement('div');s.className='summary';s.textContent=d.summary;wrap.appendChild(s)}
+  const liveIds=new Set(live.map(favId));
+  const items=(d.items||[]).filter(it=>!liveIds.has(favId(it))); if(!items.length&&!live.length){wrap.innerHTML+=state.refine?refineLinks(cat):'<div class="empty">לא נמצאו המלצות. נסה קטגוריה אחרת או הרחב אזור.</div>'}
+  items.forEach(it=>wrap.appendChild(card(it)));
+  body.appendChild(wrap);
+}
+function renderFavs(){ const b=$('#favBody'); b.innerHTML=''; if(!state.favs.length){b.innerHTML='<div class="empty">עוד לא שמרת כלום. לחץ ♡ על המלצה כדי לשמור אותה כאן.</div>';return} state.favs.forEach(it=>b.appendChild(card(it))); }
+$('#clearFavs').onclick=()=>{ if(!state.favs.length)return; if(confirm('למחוק את כל השמורים?')){state.favs=[];LS.set('favs',[]);renderFavs()} };
+
+// ===== TRIP PLAN =====
+const TRIP={start:'2026-09-16',end:'2026-09-22',city:'Bucharest'};
+state.trip=FAM?(window.__EMBED.trip||null):LS.get('trip',null); state.tripDay=null;
+state.tripOpts=LS.get('tripOpts',{hotel:'',flights:'',shabbat:false,daytrip:false,therme:true});
+function unwrapPlan(snap){ if(!snap)return null; const d=typeof snap.data==='function'?snap.data():(snap.data&&snap.data.days?snap.data:snap); return d&&d.days?d:null; }
+function tripDates(){ const out=[]; const [y,m,d0]=TRIP.start.split('-').map(Number); const d1=Number(TRIP.end.split('-')[2]); for(let d=d0;d<=d1;d++)out.push(`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`); return out; }
+function todayISO(){ const d=new Date(); return new Date(d.getTime()-d.getTimezoneOffset()*6e4).toISOString().slice(0,10); }
+const DOW=['א׳','ב׳','ג׳','ד׳','ה׳','ו׳','ש׳'];
+function updateTripSub(){ const t=todayISO(); const inTrip=t>=TRIP.start&&t<=TRIP.end; const d=state.trip&&state.trip.days&&state.trip.days.find(x=>x.date===t); $('#tripSub').textContent=d?('היום: '+d.title):inTrip?'16–22.9 · אין עדיין תוכנית':state.trip?'16–22.9 · תוכנית מוכנה':'16–22.9 · צור תוכנית ל-7 ימים'; }
+updateTripSub();
+// setup fields
+$('#hotelInput').value=state.tripOpts.hotel||''; $('#flightInput').value=state.tripOpts.flights||'';
+[['shabbatChip','shabbat'],['dayTripChip','daytrip'],['thermeChip','therme']].forEach(([id,k])=>{ const b=$('#'+id); b.classList.toggle('on',!!state.tripOpts[k]); b.onclick=()=>{state.tripOpts[k]=!state.tripOpts[k];b.classList.toggle('on',state.tripOpts[k]);LS.set('tripOpts',state.tripOpts)}; });
+function saveOpts(){ state.tripOpts.hotel=$('#hotelInput').value.trim(); state.tripOpts.flights=$('#flightInput').value.trim(); LS.set('tripOpts',state.tripOpts); }
+$('#tripBtn').onclick=()=>{ show('trip'); renderTrip(); };
+$('#tripBack').onclick=()=>show('home');
+$('#tripRegen').onclick=()=>{ $('#tripSetup').classList.remove('hidden'); $('#tripSetup').scrollIntoView({behavior:'smooth'}); };
+$('#tripGo').onclick=()=>buildTrip();
+if(FAM){ ['hotBtn','planBtn','settingsBtn','tripRegen','refreshBtn'].forEach(id=>{const e=$('#'+id);if(e)e.classList.add('hidden')}); $('#tagline').textContent='מדריך הטיול של המשפחה · גרסה משפחתית'; $('#tripSetup').innerHTML='<div class="notice">התוכנית עוד לא נוצרה. נדב יוצר אותה באפליקציה הראשית והיא תופיע כאן בעדכון הבא.</div>'; }
+
+function tripPrompt(){
+  const o=state.tripOpts; const L=(state.live&&state.live.items)||[];
+  const pool=L.map(i=>`- ${i.name_en} [${i.cat}${i.sub?'/'+i.sub:''}] (${i.tag}) ${i.area||''}${i.lat?` @${i.lat},${i.lng}`:''} — ${i.kids||''}`).join('\n');
+  return `אתה מתכנן טיולים למשפחות. תכנן טיול משפחתי בבוקרשט, רומניה, מ-16.9.2026 (יום רביעי) עד 22.9.2026 (יום שלישי) — 7 ימים.
+המשפחה: ${state.fam}. ${state.pref?'העדפות/מגבלות: '+state.pref+'. ':''}תקציב: ${ {low:'חסכוני',mid:'בינוני',high:'גבוה'}[state.budget] }.
+${o.hotel?'המלון/אזור הלינה: '+o.hotel+'. תכנן כך שכל יום מתחיל ונגמר קרוב למלון ומקבץ אזורים.':'המלון לא ידוע — הנח מרכז העיר (Universitate/עיר עתיקה).'}
+${o.flights?'טיסות: '+o.flights+'. יום הנחיתה ויום ההמראה חלקיים בהתאם.':'הנח נחיתה בצהריים ב-16.9 והמראה אחה"צ ב-22.9 — יום ראשון ואחרון קלים.'}
+${o.shabbat?'המשפחה שומרת שבת: יום שישי 18.9 להיות במלון/ליד חב"ד (Bereshit, Strada Tache Ionescu 9) לפני 18:45 (כניסת שבת ~19:00), ארוחות שבת בחב"ד בהרשמה מראש; שבת 19.9 רק הליכה ברגל, פארקים, בלי כרטיסים/תחבורה/כסף, סיום שבת ~20:00. ':''}
+${o.daytrip?'לכלול יום מלא (12-13 שעות, יציאה 07:00) לארמון פלש + טירת בראן + בראשוב במיניבוס פרטי. ':''}
+${o.therme?'לכלול יום (5-6 שעות) ב-Therme București, עדיף ביום חול כשפחות עמוס. ':'לא לכלול Therme. '}
+שלב חצי יום ברובע היהודי (בית הכנסת הכוראלי, בית הכנסת הגדול, מוזיאון תולדות היהודים, אנדרטת השואה — הכל במרחק הליכה מ-Unirii), עדיף בוקר של יום חול, ובאותו יום ארוחה במסעדה ישראלית/כשרה (Zadok ליד Unirii).
+מזג אוויר צפוי: ספטמבר, 22-27 מעלות ביום, ערבים נעימים, סיכוי לגשם — תכנן חלופה מקורה ליום אחד.
+
+השתמש קודם כל ברשימת המקומות הבאה (נבדקו ברשת, עם סרטונים), והשלם ממקומות מוכרים ומדורגים גבוה שאתה בטוח שקיימים. אל תמציא מקומות. שמור על name_en בדיוק כמו ברשימה כשמשתמשים בפריט מהרשימה:
+${pool}
+
+עקרונות: לא יותר מ-4-5 תחנות ביום, קיבוץ לפי אזור (מינימום נסיעות), ארוחות אמיתיות (צהריים ~13:00, ערב ~19:00), הפסקת קינוח/גלידה אחה"צ, יום אחד "קליל" באמצע. ציין הזמנות מראש שחובה לעשות.
+${ageRules()}
+בנוסף לכל התוכנית: בכל יום תחנה אחת לפחות שהיא בבירור "של הגדולים" (13-16: קארטינג, חדר בריחה, גג/תצפית, מוזיאון קומוניזם, אוכל שף) ואחת "של הקטנים" (6-9), ובסך הכל התוכנית לא תיראה כמו טיול של פעוטות — בני 13 ו-16 צריכים לרצות לבוא.
+החזר JSON בלבד:
+{"title":"שם לטיול","overview":"3 משפטים","days":[{"date":"2026-09-16","title":"כותרת קצרה ליום","theme":"האזור/הרעיון של היום במשפט","stops":[{"time":"10:00","name":"שם בעברית","name_en":"שם לחיפוש במפות","type":"אטרקציה|אוכל|קינוח|טבע|קניות|לוגיסטיקה","duration":"שעה וחצי","why":"למה כאן, משפט","kids":"לפי ילד: 6 / 9 / 13 / 16","ages":[6,9,13,16],"book":"מה להזמין מראש או ריק","maps_query":"שם + Bucharest"}]}],"bookings":["רשימת ההזמנות שחובה לעשות לפני הטיסה, עם תאריך"],"tips":["4-5 טיפים כלליים"]}`;
+}
+async function buildTrip(){
+  saveOpts(); const body=$('#tripBody'); $('#tripSetup').classList.add('hidden');
+  body.innerHTML='<div class="loading"><div class="spin"></div><div>בונה תוכנית ל-7 ימים… (כדקה)</div></div>';
+  try{
+    const p=await ai.json(tripPrompt(),{modelTier:'complex',cache:false});
+    if(!p||!p.days)throw {message:'תשובה לא תקינה'};
+    p.created=new Date().toISOString(); p.opts=Object.assign({},state.tripOpts);
+    state.trip=p; LS.set('trip',p); state.tripDay=null; updateTripSub(); renderTrip(); saveTripToDb();
+  }catch(e){ body.innerHTML=`<div class="notice err">${e&&e.code==='not_granted'?'ה-AI לא זמין בתצוגה הזו — פתח מתוך Claude כשאתה מחובר.':'לא הצלחתי לבנות תוכנית: '+(e&&e.message||e)}</div>`; $('#tripSetup').classList.remove('hidden'); }
+}
+async function saveTripToDb(){ try{ const db=await dbReady; if(!db)return; await db.doc('plan/current').set(state.trip); toast('התוכנית נשמרה לכל המשפחה'); }catch(e){ console.warn('plan save failed',e); toast('נשמר בטלפון הזה בלבד'); } }
+function liveByName(n){ const L=(state.live&&state.live.items)||[]; const k=(n||'').toLowerCase().trim(); return L.find(i=>(i.name_en||'').toLowerCase().trim()===k); }
+function renderTrip(){
+  const body=$('#tripBody'); const p=state.trip;
+  if(!p){ $('#tripSetup').classList.remove('hidden'); body.innerHTML=''; return; }
+  $('#tripSetup').classList.add('hidden'); body.innerHTML='';
+  const t=todayISO(); const dates=tripDates();
+  if(!state.tripDay) state.tripDay=(t>=TRIP.start&&t<=TRIP.end)?t:dates[0];
+  const ov=document.createElement('div');ov.className='summary';ov.innerHTML=`<b>${esc(p.title||'')}</b><br>${esc(p.overview||'')}`;body.appendChild(ov);
+  const tabs=document.createElement('div');tabs.className='days';
+  dates.forEach(ds=>{ const d=new Date(ds+'T12:00:00'); const b=document.createElement('button'); b.className=(ds===state.tripDay?'on ':'')+(ds===t?'today':''); b.innerHTML=`<span class="d">${d.getDate()}</span><span class="w">${DOW[d.getDay()]}</span>`; b.onclick=()=>{state.tripDay=ds;renderTrip()}; tabs.appendChild(b); });
+  body.appendChild(tabs);
+  const day=(p.days||[]).find(x=>x.date===state.tripDay);
+  if(!day){ body.innerHTML+='<div class="empty">אין תוכנית ליום הזה.</div>'; }
+  else{
+    const h=document.createElement('div');h.className='day-title';h.innerHTML=`<h2>${esc(day.title||'')}</h2><div class="theme">${esc(day.theme||'')}</div>`;body.appendChild(h);
+    (day.stops||[]).forEach((s,idx)=>{
+      const w=document.createElement('div');w.className='stop';
+      const lv=liveByName(s.name_en);
+      const c=card(Object.assign({name:s.name,name_en:s.name_en,tag:lv?lv.tag:'classic',area:s.type,distance:s.duration,why:s.why,kids:s.kids,tip:s.book?('להזמין: '+s.book):'',maps_query:s.maps_query},lv?{source:lv.source,source2:lv.source2,lat:lv.lat,lng:lv.lng}:{}),!!lv);
+      if(!lv)$('.tag',c).remove();
+      const del=document.createElement('button');del.className='del';del.title='הסר תחנה';del.textContent='×';del.onclick=()=>{ if(!confirm('להסיר את "'+s.name+'" מהתוכנית?'))return; day.stops.splice(idx,1); LS.set('trip',p); renderTrip(); saveTripToDb(); };
+      if(!FAM)c.appendChild(del);
+      w.innerHTML=`<div class="time">${esc(s.time||'')}</div>`;w.appendChild(c);body.appendChild(w);
+    });
+  }
+  if(p.bookings&&p.bookings.length){const b=document.createElement('div');b.className='notice';b.style.marginTop='16px';b.innerHTML='<b>📞 להזמין לפני הטיסה:</b><br>'+p.bookings.map(esc).join('<br>');body.appendChild(b)}
+  if(p.tips&&p.tips.length){const b=document.createElement('div');b.className='notice';b.style.marginTop='10px';b.innerHTML='<b>טיפים:</b><br>'+p.tips.map(esc).join('<br>');body.appendChild(b)}
+  const meta=document.createElement('div');meta.className='empty';meta.style.fontSize='12px';meta.textContent='נוצר '+(p.created||'').slice(0,10)+(p.opts&&p.opts.hotel?' · מלון: '+p.opts.hotel:'');body.appendChild(meta);
+}
+
+// ===== RADAR =====
+state.radarRange=LS.get('radarRange',2); // km — visible edge of the radar
+state.radarCat='all';
+state.radarSel=null;
+let radarWatchId=null;
+function startRadarWatch(){
+  if(radarWatchId!=null||!navigator.geolocation)return;
+  radarWatchId=navigator.geolocation.watchPosition(p=>{
+    state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude});
+    LS.set('loc',state.loc); renderLoc();
+    if(!$('#view-radar').classList.contains('hidden'))drawRadar();
+  },()=>{ /* keep last known location on a transient GPS error */ },{enableHighAccuracy:true,maximumAge:5000,timeout:15000});
+}
+function stopRadarWatch(){ if(radarWatchId!=null&&navigator.geolocation){navigator.geolocation.clearWatch(radarWatchId);radarWatchId=null} }
+const RADAR_CATS=[['all','הכל','◎'],['rest','אוכל','🍽️'],['fun','אטרקציות','🎢'],['nature','טבע','🏞️'],['shop','קניות','🛍️'],['jew','יהדות','✡️']];
+const RADAR_GROUP={rest:['rest','dessert','cafe','market','breakfast','kidsfood'],fun:['motor','escape','museum','luna','extreme','water','indoor','show'],nature:['natpark','view','hike','beach','citypark'],shop:['clothes','mall','souvenir'],jew:['kosher','jewish','shabbat']};
+function bearingTo(it){ const l=state.loc; if(!l||l.lat==null||it.lat==null)return null;
+  const toRad=x=>x*Math.PI/180, toDeg=x=>x*180/Math.PI;
+  const y=Math.sin(toRad(it.lng-l.lng))*Math.cos(toRad(it.lat));
+  const x=Math.cos(toRad(l.lat))*Math.sin(toRad(it.lat))-Math.sin(toRad(l.lat))*Math.cos(toRad(it.lat))*Math.cos(toRad(it.lng-l.lng));
+  return (toDeg(Math.atan2(y,x))+360)%360;
+}
+function radarItems(){
+  const L=state.live; if(!L||!L.items)return [];
+  const maxFar=20; // ק"מ — מעבר לזה זה כבר "טיול יום", לא רדאר-בהליכה
+  return L.items.filter(it=>it.lat!=null&&it.lng!=null).filter(fitsWho).filter(it=>{
+    if(state.radarCat==='all')return true;
+    const grp=RADAR_GROUP[state.radarCat]||[];
+    return grp.includes(it.cat)||(it.alt||[]).some(a=>grp.includes(a));
+  }).map(it=>Object.assign({},it,{_d:distTo(it),_b:bearingTo(it)})).filter(it=>it._d!=null&&it._d<=maxFar).sort((a,b)=>a._d-b._d);
+}
+function declutterPins(pts,minDist,center,maxR){
+  // Nudges pins that would overlap apart from each other, then pulls each back toward its true
+  // distance-from-center band (±14px) so the radar stays a reasonably honest picture of distance
+  // even in dense areas like Old Town where dozens of trending places sit within a few hundred meters.
+  for(let iter=0;iter<16;iter++){
+    let moved=false;
+    for(let i=0;i<pts.length;i++){
+      for(let j=i+1;j<pts.length;j++){
+        const a=pts[i],b=pts[j];
+        let dx=b.x-a.x,dy=b.y-a.y,dist=Math.hypot(dx,dy);
+        if(dist<minDist){
+          moved=true;
+          if(dist<1e-6){ const a2=(i*137+j*971)%360*Math.PI/180; dx=Math.cos(a2);dy=Math.sin(a2);dist=1; }
+          const push=(minDist-dist)/2,ux=dx/dist,uy=dy/dist;
+          a.x-=ux*push;a.y-=uy*push;b.x+=ux*push;b.y+=uy*push;
+        }
+      }
+    }
+    pts.forEach(p=>{
+      const dx=p.x-center,dy=p.y-center;let r=Math.hypot(dx,dy)||1;
+      const clamped=Math.min(Math.max(r,Math.max(18,p.baseR-20)),Math.min(maxR,p.baseR+20));
+      const s=clamped/r; p.x=center+dx*s; p.y=center+dy*s;
+    });
+    if(!moved)break;
+  }
+}
+function radarRingSteps(){ const r=state.radarRange; return [r/4,r/2,r]; }
+// סקאלת שורש במקום ליניארית: בעיר העתיקה עשרות מקומות יושבים בתוך כמה מאות מטרים,
+// ובסקאלה ליניארית כולם נדחסים לעיגול קטן סביב המרכז שאי אפשר ללחוץ עליו. שורש
+// מותח את הטווח הקרוב החוצה ונותן לו מקום, בלי לשקר לגבי הסדר — מה שקרוב יותר עדיין קרוב יותר.
+// הטבעות מצוירות באותה טרנספורמציה, כך שהתוויות עליהן נשארות נכונות.
+function radarRadius(km,R){ const f=Math.min(Math.max(km,0)/state.radarRange,1); return R*Math.sqrt(f); }
+function fmtKm(k){ return k<1?Math.round(k*1000)+' מ׳':(Math.round(k*10)/10)+' ק״מ'; }
+function navUrl(it){ const l=state.loc; if(l&&l.lat!=null&&it.lat!=null)return `https://www.google.com/maps/dir/?api=1&origin=${l.lat},${l.lng}&destination=${it.lat},${it.lng}&travelmode=walking`; return mapsUrl(it.maps_query||it.name_en||it.name); }
+function renderRadar(){
+  const box=$('#radarBody'); box.innerHTML='';
+  const wrap=document.createElement('div'); wrap.className='radar-wrap';
+  const ctrl=document.createElement('div'); ctrl.className='radar-controls';
+  ctrl.innerHTML='<div class="chips">'+[1,2,5,20].map(r=>`<button class="pill ${state.radarRange===r?'on':''}" data-r="${r}">${r} ק״מ</button>`).join('')+'</div>'
+    +'<div class="chips">'+RADAR_CATS.map(([id,n,ic])=>`<button class="pill ${state.radarCat===id?'on':''}" data-c="${id}">${ic} ${n}</button>`).join('')+'</div>';
+  wrap.appendChild(ctrl);
+  const box2=document.createElement('div'); box2.className='radar-box'; box2.id='radarSvgBox';
+  wrap.appendChild(box2);
+  const note=document.createElement('div'); note.className='radar-note'; note.id='radarNote';
+  wrap.appendChild(note);
+  const legend=document.createElement('div'); legend.className='radar-legend';
+  legend.innerHTML='<span><i style="background:var(--trend)"></i>טרנד</span><span><i style="background:var(--classic)"></i>קלאסיקה</span><span><i style="background:var(--accent)"></i>טרנד+קלאסיקה</span>';
+  wrap.appendChild(legend);
+  const pop=document.createElement('div'); pop.className='radar-pop'; pop.id='radarPop';
+  wrap.appendChild(pop);
+  box.appendChild(wrap);
+  $$('[data-r]',ctrl).forEach(b=>b.onclick=()=>{state.radarRange=+b.dataset.r;LS.set('radarRange',state.radarRange);renderRadar();});
+  $$('[data-c]',ctrl).forEach(b=>b.onclick=()=>{state.radarCat=b.dataset.c;state.radarSel=null;renderRadar();});
+  drawRadar();
+  if(state.radarSel)renderRadarPop(state.radarSel);
+}
+function drawRadar(){
+  const box=$('#radarSvgBox'); if(!box)return;
+  if(!state.loc||state.loc.lat==null){
+    // No location yet. GPS is blocked outright in some contexts (inside the Claude app, and in
+    // privacy-hardened browsers) — there the browser denies without ever showing a prompt — so the
+    // manual options are offered right here instead of leaving a button that silently does nothing.
+    box.classList.add('nogps');
+    box.innerHTML='<div class="radar-empty-gps">'
+      +'<div style="font-size:34px">📡</div>'
+      +'<div>הרדאר צריך לדעת איפה אתם.</div>'
+      +'<button class="pill accent" id="radarGps">שתף מיקום (GPS)</button>'
+      +'<div class="radar-or">אם הדפדפן חוסם מיקום ולא קופצת בקשת אישור — בחרו איפה אתם:</div>'
+      +'<div class="chips" id="radarAreas"></div>'
+      +'<div class="row" style="width:100%;max-width:320px"><input type="text" id="radarCoords" placeholder="או הדביקו קואורדינטות" autocomplete="off"><button class="pill" id="radarCoordsGo">קבע</button></div>'
+      +'</div>';
+    $('#radarGps',box).onclick=()=>$('#gpsBtn').click();
+    $('#radarAreas',box).innerHTML=AREAS.map(([n])=>`<button class="pill" data-a="${esc(n)}">${esc(n)}</button>`).join('');
+    $$('#radarAreas .pill',box).forEach(b=>b.onclick=()=>{ const a=AREAS.find(x=>x[0]===b.dataset.a); setArea(a[0],a[1],a[2]); drawRadar(); });
+    const go=()=>{ const v=$('#radarCoords',box).value.trim(); const m=v.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(!m){toast('הדביקו קואורדינטות בפורמט 44.43, 26.10');return} setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); drawRadar(); };
+    $('#radarCoordsGo',box).onclick=go;
+    $('#radarCoords',box).addEventListener('keydown',e=>{ if(e.key==='Enter')go() });
+    return;
+  }
+  box.classList.remove('nogps');
+  // רק מה שבתוך הטווח הנבחר מצויר. קודם כל מה שרחוק יותר נדחס לטבעת החיצונית,
+  // וכשהרשימה גדלה ל-89 מקומות הטבעת הזו הפכה לערימה שאי אפשר ללחוץ עליה.
+  const all=radarItems();
+  const inRange=all.filter(it=>it._d<=state.radarRange);
+  const beyond=all.length-inRange.length;
+  const CAP=45; // מעבר לזה אין מספיק מקום פיזי על הרדאר בלי חפיפה
+  const items=inRange.slice(0,CAP);
+  const capped=inRange.length-items.length;
+  const note=$('#radarNote');
+  if(note){
+    const parts=[`${items.length} מקומות בטווח ${state.radarRange} ק״מ`];
+    if(capped)parts.push(`${capped} נוספים בטווח לא מוצגים (צפוף מדי)`);
+    if(beyond)parts.push(`${beyond} רחוקים יותר — הגדילו טווח`);
+    note.textContent=parts.join(' · ');
+  }
+  const V=300,C=150,R=126;
+  let svg=`<svg viewBox="0 0 ${V} ${V}" role="img" aria-label="רדאר מקומות סביב המיקום שלכם">`;
+  radarRingSteps().forEach(rkm=>{
+    const rr=radarRadius(rkm,R);
+    svg+=`<circle class="radar-ring" cx="${C}" cy="${C}" r="${rr}"/><text class="radar-ring-label" x="${C+4}" y="${C-rr+10}">${fmtKm(rkm)}</text>`;
+  });
+  svg+=`<line x1="${C}" y1="${C-R}" x2="${C}" y2="${C+R}" class="radar-ring" opacity=".5"/><line x1="${C-R}" y1="${C}" x2="${C+R}" y2="${C}" class="radar-ring" opacity=".5"/>`;
+  const pts=items.map(it=>{
+    const rr=Math.max(radarRadius(it._d,R),18); // keep pins clear of the center "me" dot even when very close
+    const ang=(it._b*Math.PI/180)-Math.PI/2;
+    return {x:C+rr*Math.cos(ang),y:C+rr*Math.sin(ang),baseR:rr};
+  });
+  declutterPins(pts,25,C,R); // many trending places cluster in Old Town — spread overlapping pins apart so each stays tappable
+  items.forEach((it,idx)=>{
+    const {x,y}=pts[idx];
+    const sel=state.radarSel&&favId(state.radarSel)===favId(it);
+    const cls='radar-pin '+(it.tag||'classic')+(sel?' sel':'');
+    const ic=(NAMES[it.cat]&&NAMES[it.cat].ic)||'📍';
+    svg+=`<g class="${cls}" data-id="${idx}" transform="translate(${x},${y})"><circle r="10"/><text text-anchor="middle" dy="3.5">${ic}</text></g>`;
+  });
+  // compass labels paint on top of pins (with a halo, see CSS) so they stay legible even when a real place sits right at N/E/S/W
+  svg+=`<text class="radar-compass" x="${C}" y="${C-R-8}" text-anchor="middle">צ</text><text class="radar-compass" x="${C}" y="${C+R+16}" text-anchor="middle">ד</text><text class="radar-compass" x="${C+R+10}" y="${C+4}" text-anchor="start">מז</text><text class="radar-compass" x="${C-R-10}" y="${C+4}" text-anchor="end">מע</text>`;
+  svg+=`<circle class="radar-me-pulse" cx="${C}" cy="${C}" r="6"/><circle class="radar-me" cx="${C}" cy="${C}" r="6"/>`;
+  svg+='</svg>';
+  box.innerHTML=svg;
+  $$('.radar-pin',box).forEach(g=>g.addEventListener('click',()=>{ const it=items[+g.dataset.id]; state.radarSel=it; drawRadar(); renderRadarPop(it); }));
+  if(!items.length)box.insertAdjacentHTML('beforeend','<div class="empty" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;text-align:center;pointer-events:none">אין עדיין מקומות מהרשת בקטגוריה הזו.</div>');
+}
+function renderRadarPop(it){
+  const pop=$('#radarPop'); if(!pop)return; pop.innerHTML='';
+  if(!it)return;
+  const c=card(it,true);
+  const actions=$('.card-actions',c);
+  const nav=document.createElement('a'); nav.className='src web'; nav.target='_blank'; nav.rel='noopener'; nav.href=navUrl(it); nav.textContent='🧭 נווט מכאן ברגל';
+  if(actions)actions.insertBefore(nav,actions.firstChild);
+  const dd=document.createElement('div'); dd.className='meta'; dd.innerHTML=`<span class="dist radar-dist">📍 ${fmtKm(it._d)} מכאן</span>`;
+  const why=c.querySelector('.why');
+  if(why)c.insertBefore(dd,why); else c.appendChild(dd);
+  pop.appendChild(c);
+  pop.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+
+window.__tm=state;
+})();
+</script>
