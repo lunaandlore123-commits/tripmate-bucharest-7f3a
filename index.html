@@ -1,4 +1,14 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
 <meta name="robots" content="noindex, nofollow, noarchive">
+<style>html,body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
 <title>TripMate משפחה</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Secular+One&family=Heebo:wght@300;400;500;700&display=swap">
 <style>
@@ -164,8 +174,8 @@ nav button.on{color:var(--accent)}
 .radar-box{position:relative;width:100%;max-width:340px;aspect-ratio:1;touch-action:manipulation}
 .radar-box svg{width:100%;height:100%;display:block;overflow:visible}
 .radar-ring{fill:none;stroke:var(--line)}
-.radar-ring-label{font-size:8.5px;fill:var(--muted);font-family:"Heebo",sans-serif}
-.radar-compass{font-size:11px;fill:var(--ink2);font-weight:700;font-family:"Heebo",sans-serif;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
+.radar-ring-label{direction:ltr;font-size:8.5px;fill:var(--muted);font-family:"Heebo",sans-serif}
+.radar-compass{direction:ltr;font-size:11px;fill:var(--ink2);font-weight:700;font-family:"Heebo",sans-serif;paint-order:stroke;stroke:var(--bg);stroke-width:4px;stroke-linejoin:round;pointer-events:none}
 .radar-me{fill:var(--accent);pointer-events:none}
 .radar-me-pulse{fill:var(--accent);opacity:.35;transform-origin:center;transform-box:fill-box;animation:radarpulse 2.4s ease-out infinite;pointer-events:none}
 @keyframes radarpulse{0%{transform:scale(1);opacity:.5}100%{transform:scale(9);opacity:0}}
@@ -452,16 +462,32 @@ $('#clearCache').onclick=()=>{try{Object.keys(localStorage).filter(k=>k.startsWi
 // views
 function show(v){ ['home','results','favs','settings','trip','radar'].forEach(x=>$('#view-'+x).classList.toggle('hidden',x!==v)); $$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.view===(v==='trip'?'home':v))); window.scrollTo({top:0}); if(v==='favs')renderFavs(); if(v==='home')closeSubs(); if(v==='radar'){renderRadar();startRadarWatch();}else{stopRadarWatch();} }
 $$('nav button').forEach(b=>b.onclick=()=>{
-  // "המלצות" has nothing to show until something was picked. Instead of a dead-end toast that leaves
-  // the user stuck where they were, take them to the categories — that IS how recommendations start.
-  if(b.dataset.view==='results'&&!state.last){
-    show('home');
-    toast('בחרו קטגוריה ואציג המלצות');
-    const g=$('#foodGrid'); if(g)g.scrollIntoView({behavior:'smooth',block:'center'});
-    return;
-  }
+  // "המלצות" has nothing to show until something was picked, so it opens a chooser right here
+  // instead of bouncing the user back to the menu to hunt for the category grid.
+  if(b.dataset.view==='results'&&!state.last){ show('results'); renderResultsPicker(); return; }
   show(b.dataset.view);
 });
+// מסך בחירת קטגוריה בתוך לשונית ההמלצות
+const ALL_SECTIONS=[['אוכל',()=>FOOD],['אטרקציות',()=>FUN],['טבע ותצפיות',()=>NATURE],['קניות ולינה',()=>SHOP],['ישראלים ויהדות',()=>JEW]];
+function renderResultsPicker(){
+  $('#resTitle').textContent='✨ המלצות';
+  $('#resCtx').textContent='בחרו קטגוריה ואציג מה הכי שווה בה';
+  $('#refineBox').classList.add('hidden');
+  $('#refreshBtn').classList.add('hidden');
+  const body=$('#resBody'); body.innerHTML='';
+  ALL_SECTIONS.forEach(([title,get])=>{
+    const sec=document.createElement('div'); sec.className='section'; sec.style.marginTop='14px';
+    sec.innerHTML=`<div class="section-head"><h2 style="font-size:17px">${esc(title)}</h2></div><div class="catgrid"></div>`;
+    const gridEl=$('.catgrid',sec);
+    get().forEach(c=>{
+      const btn=document.createElement('button'); btn.className='cat'; btn.dataset.id=c.id;
+      btn.innerHTML=`<span class="ic">${c.ic}</span><span class="n">${esc(c.n)}</span>`;
+      btn.onclick=()=>{ $('#refreshBtn').classList.remove('hidden'); run(c.id); };
+      gridEl.appendChild(btn);
+    });
+    body.appendChild(sec);
+  });
+}
 $('#settingsBtn').onclick=()=>show('settings'); $('#backBtn').onclick=()=>show('home');
 
 function toast(t){ let e=$('#toast'); if(!e){e=document.createElement('div');e.id='toast';e.style.cssText='position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:8px 16px;border-radius:999px;font-size:14px;z-index:9;transition:opacity .3s';document.body.appendChild(e)} e.textContent=t;e.style.opacity=1;clearTimeout(e._t);e._t=setTimeout(()=>e.style.opacity=0,1800); }
@@ -472,7 +498,7 @@ renderLoc();
 $('#cityGo').onclick=()=>setCity($('#cityInput').value.trim());
 $('#cityInput').addEventListener('keydown',e=>{if(e.key==='Enter')setCity(e.target.value.trim())});
 const AREAS=[['העיר העתיקה',44.4315,26.0995],['Unirii',44.4268,26.1025],['Universitate',44.4355,26.1015],['Piața Victoriei',44.4525,26.0865],['Herăstrău',44.4735,26.0800],['AFI Cotroceni',44.4308,26.0540],['Băneasa',44.5080,26.0860]];
-function setArea(name,lat,lng){ state.loc=Object.assign({},state.loc||{},{city:'בוקרשט',city_en:'Bucharest',country:'רומניה',area:name,lat,lng}); LS.set('loc',state.loc); renderLoc(); renderTransport(); try{renderLive()}catch(e){} renderAreas(); toast('המיקום: '+name); }
+function setArea(name,lat,lng){ state.locManual=true; state.loc=Object.assign({},state.loc||{},{city:'בוקרשט',city_en:'Bucharest',country:'רומניה',area:name,lat,lng,manual:true}); LS.set('loc',state.loc); renderLoc(); renderTransport(); try{renderLive()}catch(e){} renderAreas(); toast('המיקום: '+name); }
 function renderAreas(){ const l=state.loc; $('#areaChips').innerHTML='<span class="eyebrow" style="align-self:center">איפה אתם?</span>'+AREAS.map(([n,la,ln])=>`<button class="pill ${l&&l.area===n?'on':''}" data-a="${n}">${n}</button>`).join(''); $$('#areaChips .pill').forEach(b=>{const a=AREAS.find(x=>x[0]===b.dataset.a);b.onclick=()=>setArea(a[0],a[1],a[2])}); }
 renderAreas();
 function setCity(c){ if(!c)return; const m=c.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(m){ setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); $('#cityInput').value=''; return; } state.loc={city:c,country:'',lat:null,lng:null,area:''}; LS.set('loc',state.loc); renderLoc(); renderAreas(); toast('המיקום נקבע'); $('#cityInput').value=''; }
@@ -483,13 +509,13 @@ $('#gpsBtn').onclick=()=>{
   $('#gpsBtn').disabled=true;$('#gpsBtn').textContent='מאתר…';
   navigator.geolocation.getCurrentPosition(async p=>{
     const {latitude:lat,longitude:lng}=p.coords;
-    if(FAM){ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat,lng}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); $('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום'; toast('המיקום עודכן'); return; }
-    state.loc={city:'',country:'',lat,lng,area:''};renderLoc();$('#locName').textContent='מזהה עיר…';
+    if(FAM){ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat,lng,manual:false}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); try{drawRadar()}catch(e){} $('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום'; toast('המיקום עודכן'); return; }
+    state.loc={city:'',country:'',lat,lng,area:'',manual:false};renderLoc();$('#locName').textContent='מזהה עיר…';
     try{
       const r=await ai.json(`Given GPS coordinates lat=${lat}, lng=${lng}, identify the location. Return JSON only: {"city":"<city name in Hebrew>","city_en":"<city name in English>","country":"<country in Hebrew>","area":"<neighborhood or district in Hebrew, or empty string>"}`,{modelTier:'quick'});
       state.loc={city:r.city||r.city_en||'',city_en:r.city_en||'',country:r.country||'',area:r.area||'',lat,lng};
     }catch(e){ state.loc.city='מיקום נוכחי'; }
-    LS.set('loc',state.loc);renderLoc();renderTransport();try{renderLive()}catch(e){}$('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום';
+    LS.set('loc',state.loc);renderLoc();renderTransport();try{renderLive()}catch(e){}try{drawRadar()}catch(e){}$('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום';
   },err=>{ $('#gpsBtn').disabled=false;$('#gpsBtn').textContent='שתף מיקום'; gpsFail(err); },{enableHighAccuracy:false,timeout:12000,maximumAge:120000});
 };
 
@@ -568,7 +594,7 @@ function needGps(cb){
   if(state.loc&&state.loc.lat!=null){cb();return}
   if(!navigator.geolocation){toast('אין GPS בדפדפן');return}
   toast('מאתר מיקום…');
-  navigator.geolocation.getCurrentPosition(p=>{ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); cb(); },err=>{ show('home'); gpsFail(err); },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+  navigator.geolocation.getCurrentPosition(p=>{ state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude,manual:false}); LS.set('loc',state.loc); renderLoc(); renderTransport(); renderLive(); cb(); },err=>{ show('home'); gpsFail(err); },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
 }
 $('#nearBtn').onclick=()=>needGps(()=>run('near'));
 
@@ -831,21 +857,21 @@ function renderTrip(){
 state.radarRange=LS.get('radarRange',2); // km — visible edge of the radar
 state.radarCat='all';
 state.radarSel=null;
-state.locManual=false; // המשתמש בחר שכונה ידנית במקום GPS (לא נשמר בין טעינות בכוונה)
+state.locManual=!!(state.loc&&state.loc.manual); // נשמר יחד עם המיקום, אחרת רענון היה מקבע מיקום מזויף
 let radarWatchId=null;
 function startRadarWatch(){
   if(radarWatchId!=null||!navigator.geolocation)return;
   radarWatchId=navigator.geolocation.watchPosition(p=>{
     // אם המשתמש בחר שכונה ידנית (למשל כדי לעיין בבוקרשט לפני הטיסה) — לא לדרוס לו אותה
     if(state.locManual)return;
-    state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude});
+    state.loc=Object.assign({},state.loc||{city:'בוקרשט',city_en:'Bucharest',country:'רומניה'},{lat:p.coords.latitude,lng:p.coords.longitude,manual:false});
     LS.set('loc',state.loc); renderLoc();
     if(!$('#view-radar').classList.contains('hidden'))drawRadar();
   },()=>{ /* keep last known location on a transient GPS error */ },{enableHighAccuracy:true,maximumAge:5000,timeout:15000});
 }
 function stopRadarWatch(){ if(radarWatchId!=null&&navigator.geolocation){navigator.geolocation.clearWatch(radarWatchId);radarWatchId=null} }
 const RADAR_CATS=[['all','הכל','◎'],['rest','אוכל','🍽️'],['fun','אטרקציות','🎢'],['nature','טבע','🏞️'],['shop','קניות','🛍️'],['jew','יהדות','✡️']];
-const RADAR_GROUP={rest:['rest','dessert','cafe','market','breakfast','kidsfood'],fun:['motor','escape','museum','luna','extreme','water','indoor','show'],nature:['natpark','view','hike','beach','citypark'],shop:['clothes','mall','souvenir'],jew:['kosher','jewish','shabbat']};
+const RADAR_GROUP={rest:['rest','dessert','cafe','market','breakfast','kidsfood'],fun:['motor','escape','museum','luna','extreme','water','indoor','show'],nature:['natpark','view','hike','beach','citypark','daytrip'],shop:['clothes','mall','souvenir','pharmacy','hotel'],jew:['kosher','jewish','shabbat']};
 function bearingTo(it){ const l=state.loc; if(!l||l.lat==null||it.lat==null)return null;
   const toRad=x=>x*Math.PI/180, toDeg=x=>x*180/Math.PI;
   const y=Math.sin(toRad(it.lng-l.lng))*Math.cos(toRad(it.lat));
@@ -863,7 +889,7 @@ function radarItems(){
 }
 function declutterPins(pts,minDist,center,maxR){
   // Nudges pins that would overlap apart from each other, then pulls each back toward its true
-  // distance-from-center band (±14px) so the radar stays a reasonably honest picture of distance
+  // distance-from-center band (±20px) so the radar stays a reasonably honest picture of distance
   // even in dense areas like Old Town where dozens of trending places sit within a few hundred meters.
   for(let iter=0;iter<16;iter++){
     let moved=false;
@@ -906,7 +932,7 @@ function radarPicker(box,o){
     +'<div class="chips" id="radarAreas"></div>'
     +'<div class="row" style="width:100%;max-width:320px"><input type="text" id="radarCoords" placeholder="או הדביקו קואורדינטות" autocomplete="off"><button class="pill" id="radarCoordsGo">קבע</button></div>'
     +'</div>';
-  const g=$('#radarGps',box); if(g)g.onclick=()=>{ state.locManual=false; $('#gpsBtn').click(); };
+  const g=$('#radarGps',box); if(g)g.onclick=()=>{ state.locManual=false; if(state.loc)state.loc.manual=false; $('#gpsBtn').click(); };
   $('#radarAreas',box).innerHTML=AREAS.map(([n])=>`<button class="pill" data-a="${esc(n)}">${esc(n)}</button>`).join('');
   $$('#radarAreas .pill',box).forEach(b=>b.onclick=()=>{ const a=AREAS.find(x=>x[0]===b.dataset.a); state.locManual=true; setArea(a[0],a[1],a[2]); drawRadar(); });
   const go=()=>{ const v=$('#radarCoords',box).value.trim(); const m=v.match(/^\s*(-?\d{1,2}\.\d+)\s*[, ]\s*(-?\d{1,3}\.\d+)\s*$/); if(!m){toast('הדביקו קואורדינטות בפורמט 44.43, 26.10');return} state.locManual=true; setArea('קואורדינטות',parseFloat(m[1]),parseFloat(m[2])); drawRadar(); };
@@ -970,7 +996,7 @@ function drawRadar(){
     note.innerHTML=esc(parts.join(' · '));
     if(state.locManual){
       note.innerHTML+=` · <b>${esc((state.loc&&state.loc.area)||'מיקום ידני')}</b> <button class="linkbtn" id="radarBackGps">חזרה למיקום שלי</button>`;
-      const b=$('#radarBackGps'); if(b)b.onclick=()=>{ state.locManual=false; state.loc=Object.assign({},state.loc,{lat:null,lng:null,area:''}); LS.set('loc',state.loc); renderLoc(); renderAreas(); drawRadar(); startRadarWatch(); };
+      const b=$('#radarBackGps'); if(b)b.onclick=()=>{ state.locManual=false; state.loc=Object.assign({},state.loc,{lat:null,lng:null,area:'',manual:false}); LS.set('loc',state.loc); renderLoc(); renderAreas(); drawRadar(); startRadarWatch(); };
     }
   }
   const V=300,C=150,R=126;
@@ -1019,3 +1045,7 @@ const bs=$('#buildStamp'); if(bs)bs.textContent='גרסה '+BUILD+(state.live&&s
 window.__tm=state;
 })();
 </script>
+
+
+</body>
+</html>
